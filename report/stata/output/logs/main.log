@@ -1,0 +1,462 @@
+------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:/Users/andres/repositories/am.as2/report/stata/output/logs/main.log
+  log type:  text
+ opened on:  23 Sep 2025, 13:26:30
+
+. 
+. // load data
+. use "$rawdata/childbirth.dta", clear
+
+. 
+. // clean data
+. save "$cleandata/childbirth_clean.dta", replace
+file C:/Users/andres/repositories/am.as2/report/stata/data/clean/childbirth_clean.dta saved
+
+. 
+. label define child_lbl ///
+>         0 "Didn't have child" ///
+>         1 "Had child"
+
+. label values child_birth child_lbl
+
+. 
+. // question one
+. gen edyears_cat = .
+(55,874 missing values generated)
+
+. replace edyears_cat = 1 if edyears <= 11 & !missing(edyears)
+(23,140 real changes made)
+
+. replace edyears_cat = 2 if edyears == 12 & !missing(edyears)
+(14,986 real changes made)
+
+. replace edyears_cat = 3 if edyears >= 13 & edyears <= 15 & !missing(edyears)
+(11,565 real changes made)
+
+. replace edyears_cat = 4 if edyears >= 16 & !missing(edyears)
+(6,183 real changes made)
+
+. 
+. label var edyears_cat "Education Category"
+
+. label define edyears_lbl ///
+>         1 "Less than HS" ///
+>         2 "HS Graduate" ///
+>         3 "Some College" ///
+>         4 "College degree or more"
+
+. label values edyears_cat edyears_lbl
+
+. 
+. graph bar (mean) income, over(edyears_cat)
+
+. graph bar (mean) income, over(edyears_cat) by(male)
+
+. 
+. // question two
+. gen log_income = log(income + 1)
+
+. reg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, r
+
+Linear regression                               Number of obs     =     55,874
+                                                F(10, 55863)      =    3882.46
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.4092
+                                                Root MSE          =     1.3351
+
+--------------------------------------------------------------------------------------------
+                           |               Robust
+                log_income | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+                   edyears |   .1455778   .0030783    47.29   0.000     .1395443    .1516114
+                       age |   .1261891    .001738    72.61   0.000     .1227826    .1295956
+                           |
+                      male |
+                     Male  |   .5992846   .0115195    52.02   0.000     .5767063    .6218628
+                           |
+                   mstatus |
+                  Married  |   .6188539   .0210716    29.37   0.000     .5775535    .6601543
+    Separated or divorced  |   .0770769   .0471269     1.64   0.102    -.0152921    .1694459
+                  Widowed  |   .0645851   .2689007     0.24   0.810    -.4624619    .5916321
+                           |
+                 ethnicity |
+                    Black  |   -.428514   .0138567   -30.92   0.000    -.4556732   -.4013547
+                 Hispanic  |  -.0826716    .014712    -5.62   0.000    -.1115072    -.053836
+Mixed Race (Non-Hispanic)  |  -.3739181   .0625671    -5.98   0.000      -.49655   -.2512862
+                           |
+               child_birth |
+                Had child  |  -.0797456   .0197567    -4.04   0.000    -.1184689   -.0410224
+                     _cons |   3.021497   .0317106    95.28   0.000     2.959344     3.08365
+--------------------------------------------------------------------------------------------
+
+. 
+. reg log_income i.edyears_cat##i.male age ib0.mstatus ib4.ethnicity i.child_birth, r
+
+Linear regression                               Number of obs     =     55,874
+                                                F(15, 55858)      =    2837.14
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.4197
+                                                Root MSE          =     1.3232
+
+----------------------------------------------------------------------------------------------
+                             |               Robust
+                  log_income | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-----------------------------+----------------------------------------------------------------
+                 edyears_cat |
+                HS Graduate  |    .378646   .0218853    17.30   0.000     .3357506    .4215414
+               Some College  |   .6468979   .0247095    26.18   0.000     .5984671    .6953287
+     College degree or more  |   1.022058   .0408434    25.02   0.000     .9420045    1.102111
+                             |
+                        male |
+                       Male  |   .4458371   .0146002    30.54   0.000     .4172207    .4744535
+                             |
+            edyears_cat#male |
+           HS Graduate#Male  |   .3845384   .0277195    13.87   0.000      .330208    .4388689
+          Some College#Male  |   .1677207   .0306945     5.46   0.000     .1075594    .2278821
+College degree or more#Male  |   .2218427   .0453623     4.89   0.000     .1329322    .3107532
+                             |
+                         age |   .1224488   .0016915    72.39   0.000     .1191334    .1257641
+                             |
+                     mstatus |
+                    Married  |   .6013079   .0208833    28.79   0.000     .5603766    .6422393
+      Separated or divorced  |     .06351   .0467819     1.36   0.175    -.0281828    .1552027
+                    Widowed  |   .0928569   .2496272     0.37   0.710    -.3964139    .5821278
+                             |
+                   ethnicity |
+                      Black  |  -.4141823    .013767   -30.09   0.000    -.4411658   -.3871988
+                   Hispanic  |  -.0733313   .0145868    -5.03   0.000    -.1019216    -.044741
+  Mixed Race (Non-Hispanic)  |   -.374774   .0618298    -6.06   0.000    -.4959608   -.2535872
+                             |
+                 child_birth |
+                  Had child  |  -.0761443   .0195652    -3.89   0.000    -.1144922   -.0377965
+                       _cons |     4.4762   .0306204   146.18   0.000     4.416184    4.536217
+----------------------------------------------------------------------------------------------
+
+. test 2.edyears_cat#1.male 3.edyears_cat#1.male 4.edyears_cat#1.male
+
+ ( 1)  2.edyears_cat#1.male = 0
+ ( 2)  3.edyears_cat#1.male = 0
+ ( 3)  4.edyears_cat#1.male = 0
+
+       F(  3, 55858) =   67.30
+            Prob > F =    0.0000
+
+. 
+. // question three
+. xtset pid wave
+
+Panel variable: pid (unbalanced)
+ Time variable: wave, 2 to 18, but with gaps
+         Delta: 1 unit
+
+. 
+. xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, re
+
+Random-effects GLS regression                   Number of obs     =     55,874
+Group variable: pid                             Number of groups  =      7,126
+
+R-squared:                                      Obs per group:
+     Within  = 0.3383                                         min =          1
+     Between = 0.5551                                         avg =        7.8
+     Overall = 0.4086                                         max =         17
+
+                                                Wald chi2(10)     =   34685.43
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+--------------------------------------------------------------------------------------------
+                log_income | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+                   edyears |   .1506688   .0030528    49.35   0.000     .1446854    .1566523
+                       age |   .1272098   .0014925    85.23   0.000     .1242845    .1301351
+                           |
+                      male |
+                     Male  |   .5690818   .0166938    34.09   0.000     .5363624    .6018011
+                           |
+                   mstatus |
+                  Married  |   .5110891   .0196358    26.03   0.000     .4726037    .5495745
+    Separated or divorced  |   .0460518   .0391008     1.18   0.239    -.0305843     .122688
+                  Widowed  |   .0854029   .2614863     0.33   0.744    -.4271007    .5979066
+                           |
+                 ethnicity |
+                    Black  |   -.383499   .0191464   -20.03   0.000    -.4210253   -.3459727
+                 Hispanic  |  -.0657926   .0202707    -3.25   0.001    -.1055224   -.0260628
+Mixed Race (Non-Hispanic)  |  -.3240238   .0810701    -4.00   0.000    -.4829183   -.1651292
+                           |
+               child_birth |
+                Had child  |   -.060144   .0173385    -3.47   0.001    -.0941269   -.0261611
+                     _cons |   2.948897   .0340701    86.55   0.000      2.88212    3.015673
+---------------------------+----------------------------------------------------------------
+                   sigma_u |  .43937223
+                   sigma_e |  1.1749831
+                       rho |  .12267659   (fraction of variance due to u_i)
+--------------------------------------------------------------------------------------------
+
+. estimates store random
+
+. 
+. // question four
+. xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, fe
+note: 1.male omitted because of collinearity.
+note: 1.ethnicity omitted because of collinearity.
+note: 2.ethnicity omitted because of collinearity.
+note: 3.ethnicity omitted because of collinearity.
+
+Fixed-effects (within) regression               Number of obs     =     55,874
+Group variable: pid                             Number of groups  =      7,126
+
+R-squared:                                      Obs per group:
+     Within  = 0.3386                                         min =          1
+     Between = 0.4950                                         avg =        7.8
+     Overall = 0.3715                                         max =         17
+
+                                                F(6, 48742)       =    4159.33
+corr(u_i, Xb) = 0.0706                          Prob > F          =     0.0000
+
+--------------------------------------------------------------------------------------------
+                log_income | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+                   edyears |   .1606887   .0038201    42.06   0.000     .1532012    .1681761
+                       age |   .1258676   .0016662    75.54   0.000     .1226019    .1291333
+                           |
+                      male |
+                     Male  |          0  (omitted)
+                           |
+                   mstatus |
+                  Married  |   .4180463   .0222448    18.79   0.000     .3744462    .4616464
+    Separated or divorced  |  -.0104239   .0430918    -0.24   0.809    -.0948845    .0740367
+                  Widowed  |   .1577851   .2856866     0.55   0.581    -.4021641    .7177344
+                           |
+                 ethnicity |
+                    Black  |          0  (omitted)
+                 Hispanic  |          0  (omitted)
+Mixed Race (Non-Hispanic)  |          0  (omitted)
+                           |
+               child_birth |
+                Had child  |  -.0545302   .0179255    -3.04   0.002    -.0896644   -.0193959
+                     _cons |   3.159588   .0377099    83.79   0.000     3.085676      3.2335
+---------------------------+----------------------------------------------------------------
+                   sigma_u |  .81562143
+                   sigma_e |  1.1749831
+                       rho |  .32516896   (fraction of variance due to u_i)
+--------------------------------------------------------------------------------------------
+F test that all u_i=0: F(7125, 48742) = 3.89                 Prob > F = 0.0000
+
+. estimates store fixed
+
+. 
+. hausman fixed random
+
+                 ---- Coefficients ----
+             |      (b)          (B)            (b-B)     sqrt(diag(V_b-V_B))
+             |     fixed        random       Difference       Std. err.
+-------------+----------------------------------------------------------------
+     edyears |    .1606887     .1506688        .0100198        .0022964
+         age |    .1258676     .1272098       -.0013422        .0007406
+     mstatus |
+          1  |    .4180463     .5110891       -.0930428        .0104531
+          2  |   -.0104239     .0460518       -.0564757        .0181117
+          3  |    .1577851     .0854029        .0723822        .1150728
+1.child_bi~h |   -.0545302     -.060144        .0056139        .0045496
+------------------------------------------------------------------------------
+                          b = Consistent under H0 and Ha; obtained from xtreg.
+           B = Inconsistent under Ha, efficient under H0; obtained from xtreg.
+
+Test of H0: Difference in coefficients not systematic
+
+    chi2(6) = (b-B)'[(V_b-V_B)^(-1)](b-B)
+            = 142.44
+Prob > chi2 = 0.0000
+
+. 
+. // question five
+. by pid: egen age_mean = mean(age)
+
+. by pid: egen mstatus_mean = mean(mstatus)
+
+. 
+. xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth age_mean mstatus_mean, r
+> e
+
+Random-effects GLS regression                   Number of obs     =     55,874
+Group variable: pid                             Number of groups  =      7,126
+
+R-squared:                                      Obs per group:
+     Within  = 0.3385                                         min =          1
+     Between = 0.5570                                         avg =        7.8
+     Overall = 0.4095                                         max =         17
+
+                                                Wald chi2(12)     =   34766.69
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+--------------------------------------------------------------------------------------------
+                log_income | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+                   edyears |    .150231   .0030645    49.02   0.000     .1442247    .1562373
+                       age |   .1280999   .0015892    80.61   0.000     .1249851    .1312147
+                           |
+                      male |
+                     Male  |   .5593619   .0178021    31.42   0.000     .5244703    .5942534
+                           |
+                   mstatus |
+                  Married  |   .4466868   .0220828    20.23   0.000     .4034054    .4899683
+    Separated or divorced  |  -.0662956   .0429338    -1.54   0.123    -.1504443    .0178532
+                  Widowed  |  -.0927856   .2628068    -0.35   0.724    -.6078775    .4223063
+                           |
+                 ethnicity |
+                    Black  |  -.3704998   .0193072   -19.19   0.000    -.4083411   -.3326585
+                 Hispanic  |  -.0686548   .0202696    -3.39   0.001    -.1083826    -.028927
+Mixed Race (Non-Hispanic)  |  -.3113751     .08106    -3.84   0.000    -.4702498   -.1525005
+                           |
+               child_birth |
+                Had child  |  -.0619623   .0173329    -3.57   0.000    -.0959341   -.0279905
+                  age_mean |   .0012739   .0031634     0.40   0.687    -.0049263    .0074741
+              mstatus_mean |    .213736   .0339134     6.30   0.000      .147267     .280205
+                     _cons |   2.886913    .057997    49.78   0.000     2.773241    3.000585
+---------------------------+----------------------------------------------------------------
+                   sigma_u |  .43937223
+                   sigma_e |  1.1749831
+                       rho |  .12267659   (fraction of variance due to u_i)
+--------------------------------------------------------------------------------------------
+
+. 
+. // question six
+. xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean, r
+> e
+
+Random-effects GLS regression                   Number of obs     =     55,874
+Group variable: pid                             Number of groups  =      7,126
+
+R-squared:                                      Obs per group:
+     Within  = 0.3385                                         min =          1
+     Between = 0.5570                                         avg =        7.8
+     Overall = 0.4095                                         max =         17
+
+                                                Wald chi2(12)     =   34766.69
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+--------------------------------------------------------------------------------------------
+                log_income | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+               child_birth |
+                Had child  |  -.0619623   .0173329    -3.57   0.000    -.0959341   -.0279905
+                       age |   .1280999   .0015892    80.61   0.000     .1249851    .1312147
+                           |
+                      male |
+                     Male  |   .5593619   .0178021    31.42   0.000     .5244703    .5942534
+                           |
+                   mstatus |
+                  Married  |   .4466868   .0220828    20.23   0.000     .4034054    .4899683
+    Separated or divorced  |  -.0662956   .0429338    -1.54   0.123    -.1504443    .0178532
+                  Widowed  |  -.0927856   .2628068    -0.35   0.724    -.6078775    .4223063
+                           |
+                 ethnicity |
+                    Black  |  -.3704998   .0193072   -19.19   0.000    -.4083411   -.3326585
+                 Hispanic  |  -.0686548   .0202696    -3.39   0.001    -.1083826    -.028927
+Mixed Race (Non-Hispanic)  |  -.3113751     .08106    -3.84   0.000    -.4702498   -.1525005
+                           |
+                   edyears |    .150231   .0030645    49.02   0.000     .1442247    .1562373
+                  age_mean |   .0012739   .0031634     0.40   0.687    -.0049263    .0074741
+              mstatus_mean |    .213736   .0339134     6.30   0.000      .147267     .280205
+                     _cons |   2.886913    .057997    49.78   0.000     2.773241    3.000585
+---------------------------+----------------------------------------------------------------
+                   sigma_u |  .43937223
+                   sigma_e |  1.1749831
+                       rho |  .12267659   (fraction of variance due to u_i)
+--------------------------------------------------------------------------------------------
+
+. 
+. xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean, 
+> re
+
+Random-effects GLS regression                   Number of obs     =     55,874
+Group variable: pid                             Number of groups  =      7,126
+
+R-squared:                                      Obs per group:
+     Within  = 0.3399                                         min =          1
+     Between = 0.5569                                         avg =        7.8
+     Overall = 0.4109                                         max =         17
+
+                                                Wald chi2(13)     =   34940.72
+corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
+
+--------------------------------------------------------------------------------------------
+                log_income | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
+---------------------------+----------------------------------------------------------------
+               child_birth |
+                Had child  |  -.3395959    .031147   -10.90   0.000    -.4006429   -.2785489
+                           |
+                      male |
+                     Male  |   .5157956   .0182584    28.25   0.000     .4800097    .5515815
+                           |
+          child_birth#male |
+           Had child#Male  |   .3964431    .036967    10.72   0.000     .3239892     .468897
+                           |
+                       age |   .1271224   .0015901    79.95   0.000     .1240059    .1302388
+                           |
+                   mstatus |
+                  Married  |     .44615    .022057    20.23   0.000      .402919     .489381
+    Separated or divorced  |  -.0686048   .0428839    -1.60   0.110    -.1526557    .0154461
+                  Widowed  |  -.0877799   .2625563    -0.33   0.738    -.6023809     .426821
+                           |
+                 ethnicity |
+                    Black  |  -.3676485   .0193105   -19.04   0.000    -.4054965   -.3298006
+                 Hispanic  |  -.0682217   .0202718    -3.37   0.001    -.1079537   -.0284897
+Mixed Race (Non-Hispanic)  |  -.3039354   .0810723    -3.75   0.000    -.4628343   -.1450366
+                           |
+                   edyears |   .1509916   .0030632    49.29   0.000     .1449879    .1569953
+                  age_mean |   .0020134   .0031635     0.64   0.524    -.0041869    .0082137
+              mstatus_mean |   .2206051   .0339145     6.50   0.000     .1541338    .2870764
+                     _cons |   2.910662   .0580315    50.16   0.000     2.796923    3.024402
+---------------------------+----------------------------------------------------------------
+                   sigma_u |  .44000676
+                   sigma_e |  1.1737224
+                       rho |  .12321934   (fraction of variance due to u_i)
+--------------------------------------------------------------------------------------------
+
+. 
+. test 1.child_birth#1.male
+
+ ( 1)  1.child_birth#1.male = 0
+
+           chi2(  1) =  115.01
+         Prob > chi2 =    0.0000
+
+. 
+. // question eight
+. by pid: egen total_waves = count(wave)
+
+. tab total_waves
+
+total_waves |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        813        1.46        1.46
+          2 |      1,306        2.34        3.79
+          3 |      1,746        3.12        6.92
+          4 |      2,064        3.69       10.61
+          5 |      2,545        4.55       15.17
+          6 |      2,616        4.68       19.85
+          7 |      2,660        4.76       24.61
+          8 |      2,688        4.81       29.42
+          9 |      2,799        5.01       34.43
+         10 |      2,520        4.51       38.94
+         11 |      2,486        4.45       43.39
+         12 |      2,988        5.35       48.74
+         13 |      3,640        6.51       55.25
+         14 |      4,354        7.79       63.04
+         15 |      4,560        8.16       71.20
+         16 |      5,872       10.51       81.71
+         17 |     10,217       18.29      100.00
+------------+-----------------------------------
+      Total |     55,874      100.00
+
+. 
+end of do-file
+
+. do "C:\Users\andres\AppData\Local\Temp\STD4128_000000.tmp"
+
+. graph bar (mean) income, over(edyears_cat)
+
+. 
+end of do-file
+

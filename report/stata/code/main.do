@@ -13,6 +13,7 @@
 // setup
 clear all
 set more off
+set graphics off
 version 18
 
 // globals
@@ -35,8 +36,8 @@ use "$rawdata/childbirth.dta", clear
 save "$cleandata/childbirth_clean.dta", replace
 
 label define child_lbl ///
-	0 "Didn't have child" ///
-	1 "Had child"
+	0 "No childbirth" ///
+	1 "Childbirth"
 label values child_birth child_lbl
 
 // question one
@@ -49,8 +50,8 @@ replace edyears_cat = 4 if edyears >= 16 & !missing(edyears)
 label var edyears_cat "Education Category"
 label define edyears_lbl ///
 	1 "Less than HS" ///
-	2 "HS Graduate" ///
-	3 "Some College" ///
+	2 "HS graduate" ///
+	3 "Some college" ///
 	4 "College degree or more"
 label values edyears_cat edyears_lbl
 
@@ -58,7 +59,10 @@ graph bar (mean) income, over(edyears_cat)
 graph bar (mean) income, over(edyears_cat) by(male)
 
 // question two
-gen log_income = log(income + 1)
+sum income, detail
+count if income <= 0
+
+gen log_income = log(income)
 reg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, r
 
 reg log_income i.edyears_cat##i.male age ib0.mstatus ib4.ethnicity i.child_birth, r
@@ -90,5 +94,19 @@ xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age
 test 1.child_birth#1.male
 
 // question eight
-by pid: egen total_waves = count(wave)
-tab total_waves
+bysort pid (wave): gen n_waves = _N
+gen all_waves = n_waves == 17
+
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean all_waves, re
+
+bysort pid (wave): gen next_wave = (wave[_n+1] == wave + 1)
+
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean next_wave, re
+
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean n_waves, re
+
+// save data
+save "$cleandata/childbirth_clean.dta", replace
+
+// close log
+log close

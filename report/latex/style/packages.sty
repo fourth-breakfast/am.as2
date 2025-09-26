@@ -1,0 +1,42 @@
+\ProvidesPackage{style/packages}
+
+% font
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{kpfonts}
+\usepackage[scaled=0.8]{sourcecodepro}
+
+%bibliography
+\usepackage{url}
+\urlstyle{same}
+%\usepackage[style=verbose-ibid, backend=biber]{biblatex}
+%\addbibresource{references.bib}
+
+% figures
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+% estout
+\usepackage{booktabs}
+\usepackage{dcolumn}
+
+% captions
+\usepackage{caption}
+\captionsetup{
+    labelfont=bf,
+    font=small,
+    labelsep=colon
+}
+
+% headers
+\usepackage{scrlayer-scrpage}
+\clearpairofpagestyles
+
+% import
+\usepackage{import}
+
+% minted
+\usepackage{minted}
+\setminted{style=stata-light,bgcolor=gray!5,linenos=true}

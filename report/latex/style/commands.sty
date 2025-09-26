@@ -1,0 +1,31 @@
+\ProvidesPackage{style/commands}
+
+% commands
+\newcommand{\question}[2]{\section*{\underbar{Question #1 [#2]}}\vspace{-1em}
+    \setcounter{table}{0}\renewcommand{\thetable}{#1.\arabic{table}}
+    \setcounter{figure}{0}\renewcommand{\thefigure}{#1.\arabic{figure}}
+    \setcounter{equation}{0}\renewcommand{\theequation}{#1.\arabic{equation}}}
+\newcommand{\note}[1]{\textit{#1}}
+\newcommand{\subquestion}[2]{\textit{#1) #2}}
+\newcommand{\icode}[1]{\mintinline{stata}{#1}}
+
+% figures
+\newcommand{\fig}[2]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.8\textwidth]{\figures #1}
+        \caption{#2}
+        \label{fig:\detokenize{#1}}
+    \end{figure}
+}
+
+\newcommand{\tab}[2]{
+\begin{table}[H]
+    \begin{center}
+        \small
+        \caption{#2}
+        \input{\tables#1}
+        \label{tab:\detokenize{#1}}
+    \end{center}
+\end{table}
+}

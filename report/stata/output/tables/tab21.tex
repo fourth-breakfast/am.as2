@@ -1,0 +1,31 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{1}{ccc}}
+\toprule
+                    & Coefficient&\shortstack{Robust\\std. err.}&       P>|t|\\
+\midrule
+\textbf{Treatment variable}&            &            &            \\
+Education years     &      0.1458&    (0.0031)&       0.000\\
+\\ \textbf{Control variables}&            &            &            \\
+Age                 &      0.1263&    (0.0017)&       0.000\\
+Male                &      0.6000&    (0.0115)&       0.000\\
+Childbirth          &     -0.0795&    (0.0198)&       0.000\\
+                    &            &            &            \\
+Black               &     -0.4286&    (0.0139)&       0.000\\
+Hispanic            &     -0.0825&    (0.0147)&       0.000\\
+Mixed Race (Non-Hispanic)&     -0.3744&    (0.0627)&       0.000\\
+                    &            &            &            \\
+Married             &      0.6189&    (0.0211)&       0.000\\
+Separated or divorced&      0.0767&    (0.0472)&       0.104\\
+Widowed             &      0.0647&    (0.2690)&       0.810\\
+\\ \textbf{Constant}&            &            &            \\
+Constant            &      3.0156&    (0.0318)&       0.000\\
+\midrule
+Observations        &       55874&            &            \\
+Prob > F            &      0.0000&            &            \\
+R-squared           &      0.4089&            &            \\
+Adj. R-squared      &      0.4088&            &            \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize Dependent variable: log(income)}\\
+\end{tabular}
+}

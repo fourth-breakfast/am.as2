@@ -1,0 +1,37 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{1}{ccc}}
+\toprule
+                    & Coefficient&\shortstack{Robust\\std. err.}&       P>|t|\\
+\midrule
+\textbf{Treatment variable}&            &            &            \\
+HS graduate         &      0.3802&    (0.0219)&       0.000\\
+Some college        &      0.6488&    (0.0248)&       0.000\\
+College degree or more&      1.0239&    (0.0409)&       0.000\\
+                    &            &            &            \\
+HS graduate $\times$ Male&      0.3836&    (0.0278)&       0.000\\
+Some college $\times$ Male&      0.1664&    (0.0307)&       0.000\\
+College degree or more $\times$ Male&      0.2206&    (0.0454)&       0.000\\
+\\ \textbf{Control variables}&            &            &            \\
+Age                 &      0.1225&    (0.0017)&       0.000\\
+Male                &      0.4472&    (0.0147)&       0.000\\
+Childbirth          &     -0.0759&    (0.0196)&       0.000\\
+                    &            &            &            \\
+Black               &     -0.4143&    (0.0138)&       0.000\\
+Hispanic            &     -0.0732&    (0.0146)&       0.000\\
+Mixed Race (Non-Hispanic)&     -0.3752&    (0.0619)&       0.000\\
+                    &            &            &            \\
+Married             &      0.6013&    (0.0209)&       0.000\\
+Separated or divorced&      0.0631&    (0.0468)&       0.178\\
+Widowed             &      0.0932&    (0.2497)&       0.709\\
+\\ \textbf{Constant}&            &            &            \\
+Constant            &      4.4713&    (0.0307)&       0.000\\
+\midrule
+Observations        &       55874&            &            \\
+Prob > F            &      0.0000&            &            \\
+R-squared           &      0.4195&            &            \\
+Adj. R-squared      &      0.4193&            &            \\
+\bottomrule
+\multicolumn{4}{l}{\footnotesize Dependent variable: log(income)}\\
+\end{tabular}
+}

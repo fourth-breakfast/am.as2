@@ -5,4 +5,24 @@
 
 \subquestion{a}{Estimate the effect of childbirth on \textbf{log(income)} using the \textbf{most appropriate model}. Control for age, gender (male), marital status categories, ethnicity categories, and years of education (edyears). Interpret the estimated coefficient for childbirth in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}.}
 
+\begin{minted}{stata}
+xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity ///
+    edyears age_mean mstatus_mean, re
+\end{minted}
+
+\tab{tab61.tex}{Correlated Random Effects (CRE)}
+
 \subquestion{b}{Test whether the effect of childbirth on log(income) \textbf{differs} between males and females. What conclusions can you draw from your results?}
+
+\begin{minted}{stata}
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
+    edyears age_mean mstatus_mean, re
+\end{minted}
+
+\tab{tab62.tex}{Correlated Random Effects (CRE) with interaction effects}
+
+\begin{minted}{stata}
+test 1.child_birth#1.male
+\end{minted}
+
+\test{tab63.tex}{Single coeff. test}

@@ -1,9 +1,23 @@
 % question one
-\question{1}{0.7 points}
+\questionsp{1}{0.7 points}
 
 \note{A central question in labor economics is: \textbf{How much more do individuals earn with higher levels of education?} Economists often estimate the \emph{returns to education}---that is, the increase in earnings associated with completing high school, college, or additional years of schooling.}
 
 \note{Using the panel data provided, begin by constructing a \textbf{bar chart} showing \textbf{mean income by education group}. Group individuals based on their \textbf{highest level of educational attainment} (e.g., less than high school, high school graduate, some college, college degree or more), and plot the \textbf{average income} for each category.}
+
+\begin{minted}{stata}
+gen edyears_cat = .
+replace edyears_cat = 1 if edyears <= 11 & !missing(edyears)
+replace edyears_cat = 2 if edyears == 12 & !missing(edyears)
+replace edyears_cat = 3 if edyears >= 13 & ///
+	edyears <= 15 & !missing(edyears)
+replace edyears_cat = 4 if edyears >= 16 & !missing(edyears)
+\end{minted}
+
+\begin{minted}{stata}
+graph bar (mean) income, over(edyears_cat)
+graph bar (mean) income, over(edyears_cat) by(male)
+\end{minted}
 
 \fig{fig11.png}{Mean income by education level}
 

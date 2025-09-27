@@ -1,0 +1,41 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{1}{cccc}}
+\toprule
+                    & Coefficient&   Std. err.&       P>|t|&  Conf. int.\\
+\midrule
+\textbf{Treatment variable}&            &            &            &            \\
+Childbirth          &     -0.3358&    (0.0312)&       0.000&[-0.397,-0.275]\\
+Childbirth $\times$ Male&      0.3979&    (0.0370)&       0.000&[0.325,0.470]\\
+\\ \textbf{Control variables}&            &            &            &            \\
+Age                 &      0.1272&    (0.0016)&       0.000&[0.124,0.130]\\
+Male                &      0.5103&    (0.0185)&       0.000&[0.474,0.546]\\
+Education years     &      0.1510&    (0.0031)&       0.000&[0.145,0.157]\\
+Married             &      0.4451&    (0.0221)&       0.000&[0.402,0.488]\\
+Separated or divorced&     -0.0699&    (0.0429)&       0.104&[-0.154,0.014]\\
+Widowed             &     -0.0865&    (0.2629)&       0.742&[-0.602,0.429]\\
+Black               &     -0.3666&    (0.0194)&       0.000&[-0.405,-0.329]\\
+Hispanic            &     -0.0676&    (0.0203)&       0.001&[-0.107,-0.028]\\
+Mixed Race (Non-Hispanic)&     -0.3058&    (0.0812)&       0.000&[-0.465,-0.147]\\
+\\ \textbf{CRE variables}&            &            &            &            \\
+age\_mean            &     -0.0058&    (0.0045)&       0.197&[-0.015,0.003]\\
+mstatus\_mean        &      0.2210&    (0.0340)&       0.000&[0.154,0.288]\\
+\\ \textbf{Bias indicator}&            &            &            &            \\
+n\_waves             &      0.0065&    (0.0027)&       0.014&[0.001,0.012]\\
+                    &            &            &            &            \\
+Constant            &      3.0107&    (0.0728)&       0.000&[2.868,3.153]\\
+\midrule
+Number of obs       &       55874&            &            &            \\
+Number of groups    &        7126&            &            &            \\
+\\ R-squared within &      0.3396&            &            &            \\
+R-squared between   &      0.5567&            &            &            \\
+R-squared overall   &      0.4108&            &            &            \\
+\\ Wald $\chi^2$    &    34902.86&            &            &            \\
+Prob > $\chi^2$     &      0.0000&            &            &            \\
+\\ $\sigma\text{\_u}$&      0.4412&            &            &            \\
+$\sigma\text{\_e}$   &      1.1753&            &            &            \\
+$\rho$              &      0.1235&            &            &            \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize Dependent variable: log(income)}\\
+\end{tabular}
+}

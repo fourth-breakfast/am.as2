@@ -1,31 +1,35 @@
 {
 \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
-\begin{tabular}{l*{1}{ccc}}
+\begin{tabular}{l*{1}{cccc}}
 \toprule
-                    & Coefficient&\shortstack{Robust\\std. err.}&       P>|t|\\
+                    & Coefficient&   Std. err.&       P>|t|&  Conf. int.\\
 \midrule
-Education years     &      0.1509&    (0.0031)&       0.000\\
-\\ \textbf{Individual characteristics}&            &            &            \\
-Age                 &      0.1273&    (0.0015)&       0.000\\
-Male                &      0.5698&    (0.0167)&       0.000\\
-\\ \textbf{Married status}&            &            &            \\
-Married             &      0.5107&    (0.0197)&       0.000\\
-Separated or divorced&      0.0454&    (0.0392)&       0.246\\
-Widowed             &      0.0855&    (0.2619)&       0.744\\
-\\ \textbf{Ethnicity}&            &            &            \\
-Black               &     -0.3833&    (0.0192)&       0.000\\
-Hispanic            &     -0.0655&    (0.0203)&       0.001\\
-Mixed Race (Non-Hispanic)&     -0.3244&    (0.0813)&       0.000\\
-\\ \textbf{Childbirth}&            &            &            \\
-Childbirth          &     -0.0599&    (0.0174)&       0.001\\
-                    &            &            &            \\
-Constant            &      2.9423&    (0.0341)&       0.000\\
+\textbf{Treatment variable}&            &            &            &            \\
+Education years     &      0.1509&    (0.0031)&       0.000&[0.145,0.157]\\
+\\ \textbf{Control variables}&            &            &            &            \\
+Age                 &      0.1273&    (0.0015)&       0.000&[0.124,0.130]\\
+Male                &      0.5698&    (0.0167)&       0.000&[0.537,0.603]\\
+Childbirth          &     -0.0599&    (0.0174)&       0.001&[-0.094,-0.026]\\
+Married             &      0.5107&    (0.0197)&       0.000&[0.472,0.549]\\
+Separated or divorced&      0.0454&    (0.0392)&       0.246&[-0.031,0.122]\\
+Widowed             &      0.0855&    (0.2619)&       0.744&[-0.428,0.599]\\
+Black               &     -0.3833&    (0.0192)&       0.000&[-0.421,-0.346]\\
+Hispanic            &     -0.0655&    (0.0203)&       0.001&[-0.105,-0.026]\\
+Mixed Race (Non-Hispanic)&     -0.3244&    (0.0813)&       0.000&[-0.484,-0.165]\\
+                    &            &            &            &            \\
+Constant            &      2.9423&    (0.0341)&       0.000&[2.875,3.009]\\
 \midrule
-Observations        &       55874&            &            \\
-Prob > F            &      0.0000&            &            \\
-R-squared           &            &            &            \\
-Adj. R-squared      &            &            &            \\
+Number of obs       &       55874&            &            &            \\
+Number of groups    &        7126&            &            &            \\
+\\ R-squared within &      0.3380&            &            &            \\
+R-squared between   &      0.5546&            &            &            \\
+R-squared overall   &      0.4084&            &            &            \\
+\\ Wald $\chi^2$    &    34633.21&            &            &            \\
+Prob > $\chi^2$     &      0.0000&            &            &            \\
+\\ $\sigma\text{\_u}$&      0.4412&            &            &            \\
+$\sigma\text{\_e}$   &      1.1766&            &            &            \\
+$\rho$              &      0.1233&            &            &            \\
 \bottomrule
-\multicolumn{4}{l}{\footnotesize Dependent variable: log(income)}\\
+\multicolumn{5}{l}{\footnotesize Dependent variable: log(income)}\\
 \end{tabular}
 }

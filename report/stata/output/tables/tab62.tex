@@ -1,0 +1,39 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{1}{cccc}}
+\toprule
+                    & Coefficient&   Std. err.&       P>|t|&  Conf. int.\\
+\midrule
+\textbf{Treatment variable}&            &            &            &            \\
+Childbirth          &     -0.3390&    (0.0312)&       0.000&[-0.400,-0.278]\\
+Childbirth $\times$ Male&      0.3959&    (0.0370)&       0.000&[0.323,0.468]\\
+\\ \textbf{Control variables}&            &            &            &            \\
+Age                 &      0.1272&    (0.0016)&       0.000&[0.124,0.130]\\
+Male                &      0.5165&    (0.0183)&       0.000&[0.481,0.552]\\
+Education years     &      0.1512&    (0.0031)&       0.000&[0.145,0.157]\\
+Married             &      0.4458&    (0.0221)&       0.000&[0.403,0.489]\\
+Separated or divorced&     -0.0692&    (0.0429)&       0.107&[-0.153,0.015]\\
+Widowed             &     -0.0878&    (0.2629)&       0.739&[-0.603,0.428]\\
+Black               &     -0.3674&    (0.0194)&       0.000&[-0.405,-0.329]\\
+Hispanic            &     -0.0680&    (0.0203)&       0.001&[-0.108,-0.028]\\
+Mixed Race (Non-Hispanic)&     -0.3043&    (0.0813)&       0.000&[-0.464,-0.145]\\
+\\ \textbf{CRE variables}&            &            &            &            \\
+age\_mean            &      0.0021&    (0.0032)&       0.515&[-0.004,0.008]\\
+mstatus\_mean        &      0.2211&    (0.0340)&       0.000&[0.154,0.288]\\
+                    &            &            &            &            \\
+Constant            &      2.9032&    (0.0582)&       0.000&[2.789,3.017]\\
+\midrule
+Number of obs       &       55874&            &            &            \\
+Number of groups    &        7126&            &            &            \\
+\\ R-squared within &      0.3396&            &            &            \\
+R-squared between   &      0.5563&            &            &            \\
+R-squared overall   &      0.4106&            &            &            \\
+\\ Wald $\chi^2$    &    34887.51&            &            &            \\
+Prob > $\chi^2$     &      0.0000&            &            &            \\
+\\ $\sigma\text{\_u}$&      0.4418&            &            &            \\
+$\sigma\text{\_e}$   &      1.1753&            &            &            \\
+$\rho$              &      0.1238&            &            &            \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize Dependent variable: log(income)}\\
+\end{tabular}
+}

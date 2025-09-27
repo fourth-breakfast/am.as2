@@ -1,0 +1,35 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{1}{cccc}}
+\toprule
+                    & Coefficient&   Std. err.&       P>|t|&  Conf. int.\\
+\midrule
+\textbf{Treatment variable}&            &            &            &            \\
+Education years     &      0.1610&    (0.0038)&       0.000&[0.153,0.168]\\
+\\ \textbf{Control variables}&            &            &            &            \\
+Age                 &      0.1259&    (0.0017)&       0.000&[0.123,0.129]\\
+Male                &      0.0000&         (.)&           .&[0.000,0.000]\\
+Childbirth          &     -0.0545&    (0.0180)&       0.002&[-0.090,-0.019]\\
+Married             &      0.4178&    (0.0223)&       0.000&[0.374,0.461]\\
+Separated or divorced&     -0.0112&    (0.0432)&       0.796&[-0.096,0.073]\\
+Widowed             &      0.1575&    (0.2861)&       0.582&[-0.403,0.718]\\
+Black               &      0.0000&         (.)&           .&[0.000,0.000]\\
+Hispanic            &      0.0000&         (.)&           .&[0.000,0.000]\\
+Mixed Race (Non-Hispanic)&      0.0000&         (.)&           .&[0.000,0.000]\\
+                    &            &            &            &            \\
+Constant            &      3.1536&    (0.0378)&       0.000&[3.080,3.228]\\
+\midrule
+Number of obs       &       55874&            &            &            \\
+Number of groups    &        7126&            &            &            \\
+\\ R-squared within &      0.3383&            &            &            \\
+R-squared between   &      0.4945&            &            &            \\
+R-squared overall   &      0.3713&            &            &            \\
+\\ Wald $\chi^2$    &            &            &            &            \\
+Prob > $\chi^2$     &      0.0000&            &            &            \\
+\\ $\sigma\text{\_u}$&      0.8174&            &            &            \\
+$\sigma\text{\_e}$   &      1.1766&            &            &            \\
+$\rho$              &      0.3255&            &            &            \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize Dependent variable: log(income)}\\
+\end{tabular}
+}

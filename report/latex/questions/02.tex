@@ -3,14 +3,34 @@
 
 \note{Now, we turn to formally estimating the effect of years of education on income. Use \textbf{pooled OLS} to examine the impact of years of education (edyears) on \textbf{log(income)}, controlling for age, gender (male), marital status categories, ethnicity categories, and childbirth.}
 
-\tab{tab21.tex}{Pooled OLS}
+\begin{minted}{stata}
+sum income, detail
+count if income <= 0
+\end{minted}
+
+\begin{minted}{stata}
+gen log_income = log(income)
+reg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
+    i.child_birth
+\end{minted}
+
+\tab{tab21.tex}{Pooled OLS model}
 
 \subquestion{a}{What is the estimated return to \underbar{an additional year of education}? Interpret the coefficient on years of education in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}.}
 
 \subquestion{b}{Differences in returns to schooling by gender are sometimes interpreted as potential evidence of \textbf{labor market discrimination}. Test whether the effect of years of education using the categorical variable created in Question 1 on log(income) is the \textbf{same for men and women}. Based on your results, do you find any evidence consistent with discrimination?}
 
-\tab{tab22.tex}{Pooled OLS with interaction effects}
+\begin{minted}{stata}
+reg log_income i.edyears_cat##i.male age ib0.mstatus ib4.ethnicity ///
+    i.child_birth
+\end{minted}
 
-\tab{tab23.tex}{Joint test}
+\tab{tab22.tex}{Pooled OLS model with interaction effects}
+
+\begin{minted}{stata}
+test 2.edyears_cat#1.male 3.edyears_cat#1.male 4.edyears_cat#1.male
+\end{minted}
+
+\test{tab23.tex}{Joint F-test}
 
 \subquestion{c}{Under what conditions is the pooled OLS estimate of the effect of years of education \textbf{unbiased and efficient}? Do you believe these conditions are likely to hold in this context?}

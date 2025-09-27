@@ -3,10 +3,24 @@
 
 \note{Next, estimate a \textbf{Correlated Random Effects (CRE)} model to examine the effect of years of education (edyears) on \textbf{log(income)}.}
 
+\begin{minted}{stata}
+by pid: egen age_mean = mean(age)
+by pid: egen mstatus_mean = mean(mstatus)
+\end{minted}
+
+\begin{minted}{stata}
+xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
+    i.child_birth age_mean mstatus_mean, re
+\end{minted}
+
+\tab{tab51.tex}{Correlated Random Effects (CRE) model}
+
 \subquestion{a}{What is one advantage of the \textbf{CRE estimator} compared to the \textbf{random effects (RE)} estimator?}
 
 \subquestion{b}{What is one advantage of the \textbf{CRE estimator} compared to the \textbf{fixed effects (FE)} estimator?}
 
 \subquestion{c}{Compare the estimated coefficient for years of education from the \textbf{CRE model} with those from the \textbf{RE} and \textbf{FE} models. Are the coefficients similar or different? Explain why this is the case.}
+
+\tab{comp5.tex}{POLS, RE, FE, CRE comparison}
 
 \subquestion{d}{Based on your CRE estimates, does the assumption of \textbf{exogeneity} appear to hold? Which estimator would you consider most appropriate in this context?}

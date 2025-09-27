@@ -1,0 +1,38 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{1}{cccc}}
+\toprule
+                    & Coefficient&   Std. err.&       P>|t|&  Conf. int.\\
+\midrule
+\textbf{Treatment variable}&            &            &            &            \\
+Education years     &      0.1505&    (0.0031)&       0.000&[0.144,0.156]\\
+\\ \textbf{Control variables}&            &            &            &            \\
+Age                 &      0.1282&    (0.0016)&       0.000&[0.125,0.131]\\
+Male                &      0.5600&    (0.0178)&       0.000&[0.525,0.595]\\
+Childbirth          &     -0.0617&    (0.0174)&       0.000&[-0.096,-0.028]\\
+Married             &      0.4463&    (0.0221)&       0.000&[0.403,0.490]\\
+Separated or divorced&     -0.0669&    (0.0430)&       0.119&[-0.151,0.017]\\
+Widowed             &     -0.0927&    (0.2632)&       0.725&[-0.609,0.423]\\
+Black               &     -0.3703&    (0.0194)&       0.000&[-0.408,-0.332]\\
+Hispanic            &     -0.0684&    (0.0203)&       0.001&[-0.108,-0.029]\\
+Mixed Race (Non-Hispanic)&     -0.3117&    (0.0813)&       0.000&[-0.471,-0.152]\\
+\\ \textbf{CRE variables}&            &            &            &            \\
+age\_mean            &      0.0013&    (0.0032)&       0.676&[-0.005,0.008]\\
+mstatus\_mean        &      0.2142&    (0.0340)&       0.000&[0.148,0.281]\\
+                    &            &            &            &            \\
+Constant            &      2.8795&    (0.0581)&       0.000&[2.766,2.993]\\
+\midrule
+Number of obs       &       55874&            &            &            \\
+Number of groups    &        7126&            &            &            \\
+\\ R-squared within &      0.3382&            &            &            \\
+R-squared between   &      0.5565&            &            &            \\
+R-squared overall   &      0.4093&            &            &            \\
+\\ Wald $\chi^2$    &    34714.61&            &            &            \\
+Prob > $\chi^2$     &      0.0000&            &            &            \\
+\\ $\sigma\text{\_u}$&      0.4412&            &            &            \\
+$\sigma\text{\_e}$   &      1.1766&            &            &            \\
+$\rho$              &      0.1233&            &            &            \\
+\bottomrule
+\multicolumn{5}{l}{\footnotesize Dependent variable: log(income)}\\
+\end{tabular}
+}

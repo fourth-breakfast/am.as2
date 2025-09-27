@@ -7,4 +7,20 @@
 
 \subquestion{b}{Use a \textbf{fixed effects estimator} to examine the impact of years of education (edyears) on \textbf{log(income)}, controlling for age, gender (male), marital status categories, ethnicity categories, and childbirth. Interpret the coefficient on years of education in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}. Compare your results with those from the \textbf{pooled OLS} and \textbf{random effects} models.}
 
+\begin{minted}{stata}
+xtreg log_income edyears age i.male ib0.mstatus ib4.    ethnicity ///
+    i.child_birth, fe
+estimates store fixed
+\end{minted}
+
+\tab{tab41.tex}{Fixed effects (FE) model}
+
+\tab{comp4.tex}{POLS, RE, FE comparison}
+
 \subquestion{c}{Perform the \textbf{Hausman} test. What do the results indicate? Based on the test outcome, \textbf{which estimator} (RE or FE) is more appropriate in this context?}
+
+\begin{minted}{stata}
+hausman fixed random
+\end{minted}
+
+\test{tab42.tex}{Hausman test}

@@ -2,3 +2,33 @@
 \question{8}{0.75 points}
 
 \note{Finally, revisit your data and evaluate whether \textbf{attrition} is present in your sample. Based on your preferred model, discuss the likelihood of \textbf{attrition bias}. What conclusions can you draw regarding its presence, and how might it affect the validity of your results?}
+
+\begin{minted}{stata}
+bysort pid (wave): gen n_waves = _N
+gen all_waves = n_waves == 17
+\end{minted}
+
+\begin{minted}{stata}
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
+    edyears age_mean mstatus_mean all_waves, re
+\end{minted}
+
+\tab{tab81.tex}{Attrition bias: \emph{all waves} indicator}
+
+\begin{minted}{stata}
+bysort pid (wave): gen next_wave = (wave[_n+1] == wave + 1)
+\end{minted}
+
+\begin{minted}{stata}
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
+    edyears age_mean mstatus_mean next_wave, re
+\end{minted}
+
+\tab{tab82.tex}{Attrition bias: \emph{next wave} indicator}
+
+\begin{minted}{stata}
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
+    edyears age_mean mstatus_mean n_waves, re
+\end{minted}
+
+\tab{tab83.tex}{Attrition bias: \emph{number of waves} indicator}

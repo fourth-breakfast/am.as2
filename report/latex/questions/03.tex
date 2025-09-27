@@ -5,4 +5,18 @@
 
 \subquestion{a}{Estimate the effect of years of education (edyears) on \textbf{log(income)} using the \textbf{random effects} (RE) model, controlling for age, gender (male), marital status categories, ethnicity categories, and childbirth. Interpret the estimated coefficient for years of education in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}. Then, compare the RE estimate and standard error of the education coefficient with those obtained from the \textbf{pooled OLS model}.}
 
+\begin{minted}{stata}
+xtset pid wave
+\end{minted}
+
+\begin{minted}{stata}
+xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
+    i.child_birth, re
+estimates store random
+\end{minted}
+
+\tab{tab31.tex}{Random effects (RE) model}
+
+\tab{comp3.tex}{POLS, RE comparison}
+
 \subquestion{b}{Under which conditions and why can the random effects estimator be \textbf{more efficient} than pooled OLS?}

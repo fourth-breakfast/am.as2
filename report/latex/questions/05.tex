@@ -6,9 +6,7 @@
 \begin{minted}{stata}
 by pid: egen age_mean = mean(age)
 by pid: egen mstatus_mean = mean(mstatus)
-\end{minted}
 
-\begin{minted}{stata}
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
     i.child_birth age_mean mstatus_mean, re
 \end{minted}

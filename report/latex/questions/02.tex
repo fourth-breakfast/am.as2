@@ -4,11 +4,6 @@
 \note{Now, we turn to formally estimating the effect of years of education on income. Use \textbf{pooled OLS} to examine the impact of years of education (edyears) on \textbf{log(income)}, controlling for age, gender (male), marital status categories, ethnicity categories, and childbirth.}
 
 \begin{minted}{stata}
-sum income, detail
-count if income <= 0
-\end{minted}
-
-\begin{minted}{stata}
 gen log_income = log(income)
 reg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
     i.child_birth
@@ -17,6 +12,8 @@ reg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
 \tab{tab21.tex}{Pooled OLS model}
 
 \subquestion{a}{What is the estimated return to \underbar{an additional year of education}? Interpret the coefficient on years of education in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}.}
+
+For each additional year of schooling, individuals receive a 15.69\% higher average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
 
 \subquestion{b}{Differences in returns to schooling by gender are sometimes interpreted as potential evidence of \textbf{labor market discrimination}. Test whether the effect of years of education using the categorical variable created in Question 1 on log(income) is the \textbf{same for men and women}. Based on your results, do you find any evidence consistent with discrimination?}
 
@@ -31,6 +28,18 @@ reg log_income i.edyears_cat##i.male age ib0.mstatus ib4.ethnicity ///
 test 2.edyears_cat#1.male 3.edyears_cat#1.male 4.edyears_cat#1.male
 \end{minted}
 
-\test{tab23.tex}{Joint F-test}
+\test{tab23.tex}{Joint significance test of interaction terms}
+
+The interaction terms are highly statistically significant at the 1\% significance level, and we can therefore reject the null hypothesis that the interaction effects coefficients are equal to zero. In other words, men and women see significantly different income effects from additional education levels.
 
 \subquestion{c}{Under what conditions is the pooled OLS estimate of the effect of years of education \textbf{unbiased and efficient}? Do you believe these conditions are likely to hold in this context?}
+
+For a Pooled OLS model to be unbiased and efficient, 
+
+\subquestion{c}{Under what conditions is the pooled OLS estimate of the effect of years of education \textbf{**unbiased and efficient**}? Do you believe these conditions are likely to hold in this context?}
+
+For a pooled OLS estimate to be unbiased, the explanatory variable must be uncorrelated with the error term. In our case, this would require that all relevant variables affecting income are either included in the model or are uncorrelated with education; otherwise, the model would suffer from endogeneity due to factors like individual ability, family background or motivation, which are not present in our model.
+
+For the model to be efficient, serial correlation must not be present. Since individuals possess unobserved characteristics that remain constant across time and which impact their income across all time periods, this is highly unlikely. As a result, the error term for each individual is correlated across time periods. This does not create bias in the estimators, but it leads to unreliable significance tests and confidence intervals.
+
+In the context of our model, these conditions are unlikely to hold. There are many personal factors that influence both educational levels and income, not all of which are accounted for in our model. Additionally, it is likely that unobserved individual characteristics which remain constant across time impact income across all time periods, which means that serial correlation is present and our estimate is inefficient.

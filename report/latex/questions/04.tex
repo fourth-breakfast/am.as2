@@ -5,6 +5,8 @@
 
 \subquestion{a}{Based on theoretical considerations, would you \textbf{prefer} fixed effects or random effects estimation? Justify your answer.}
 
+The choice between fixed effects or random effects hinges on whether or not individual effects are correlated with the explanatory variable. In our model, this is extremely likely, due to the fact that many individual factors, such as ability, motivation, background and socio-economic status are correlated with further education and also with higher income for factors other than higher education. Hence, we would prefer fixed effects since even though it cannot estimate the effect of time invariant characteristics on income, it can provide us with an unbiased estimator.
+
 \subquestion{b}{Use a \textbf{fixed effects estimator} to examine the impact of years of education (edyears) on \textbf{log(income)}, controlling for age, gender (male), marital status categories, ethnicity categories, and childbirth. Interpret the coefficient on years of education in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}. Compare your results with those from the \textbf{pooled OLS} and \textbf{random effects} models.}
 
 \begin{minted}{stata}
@@ -15,7 +17,13 @@ estimates store fixed
 
 \tab{tab41.tex}{Fixed effects (FE) model}
 
+According to the FE model, for each additional year of schooling individuals receive a 17.46\% higher average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
+
 \tab{comp4.tex}{POLS, RE, FE comparison}
+
+Compared to the POLS and RE models, FE has both a higher coefficient (0.1610 compared to 0.1458 and 0.1509, respectively) as well as higher standard error (0.0038 compared to 0.0027 and 0.0031, respectively). This implies that individual-specific effects were negatively correlated with education, meaning the POLS and RE estimates had a downward bias.
+
+The higher standard error can also be expected, since FE trades some amount of efficiency in exchange for an unbiased estimate.
 
 \subquestion{c}{Perform the \textbf{Hausman} test. What do the results indicate? Based on the test outcome, \textbf{which estimator} (RE or FE) is more appropriate in this context?}
 
@@ -24,3 +32,5 @@ hausman fixed random
 \end{minted}
 
 \test{tab42.tex}{Hausman test}
+
+The Hausman test checks the null hypothesis that the individual-specific effects are uncorrelated with the explanatory variable. These results indicate that we can reject the null hypothesis at the 1\% significance level, meaning that the test indicates that individual-specific effects are correlated with education years.

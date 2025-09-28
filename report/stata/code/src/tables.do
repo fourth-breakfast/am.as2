@@ -28,14 +28,14 @@ global cregformat "$cregcells $cregcollabels $cregstats $cregstatslabels $cregst
 // question two
 eststo: reg log_income edyears age i.male i.child_birth ib0.mstatus ib4.ethnicity
 esttab using "$tables/tab21.tex", replace $regformat ///
-	refcat(edyears "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
+	refcat(edyears "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
 eststo: reg log_income i.edyears_cat i.edyears_cat#i.male age i.male i.child_birth ib0.mstatus ib4.ethnicity
 esttab using "$tables/tab22.tex", replace $regformat ///
-	refcat(2.edyears_cat "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
+	refcat(2.edyears_cat "\textbf{Explanatory variable}" 2.edyears_cat#1.male "\\ \textbf{Interaction terms}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth *#0.male 1.edyears_cat*) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
@@ -57,7 +57,7 @@ file close tab23
 // question three
 eststo: xtreg log_income edyears age i.male i.child_birth ib0.mstatus ib4.ethnicity, re
 esttab using "$tables/tab31.tex", replace $xtregformat ///
-	refcat(edyears "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
+	refcat(edyears "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
@@ -65,8 +65,8 @@ eststo clear
 // question four
 eststo: xtreg log_income edyears age i.male i.child_birth ib0.mstatus ib4.ethnicity, fe
 esttab using "$tables/tab41.tex", replace $xtregformat ///
-	refcat(edyears "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
-	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
+	refcat(edyears "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
+	drop(*.male 0.mstatus *.ethnicity 0.child_birth) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
@@ -85,7 +85,7 @@ file close tab42
 // question five
 eststo: xtreg log_income edyears age i.male i.child_birth ib0.mstatus ib4.ethnicity age_mean mstatus_mean, re
 esttab using "$tables/tab51.tex", replace $xtregformat ///
-	refcat(edyears "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
+	refcat(edyears "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
@@ -93,14 +93,14 @@ eststo clear
 // question six
 eststo: xtreg log_income i.child_birth age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean, re
 esttab using "$tables/tab61.tex", replace $xtregformat ///
-	refcat(1.child_birth "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
+	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
 eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity  age_mean mstatus_mean, re
 esttab using "$tables/tab62.tex", replace $xtregformat ///
-	refcat(1.child_birth "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
+	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
@@ -120,21 +120,21 @@ file close tab63
 // question eight
 eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean all_waves, re
 esttab using "$tables/tab81.tex", replace $xtregformat ///
-	refcat(1.child_birth "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" all_waves "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
+	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" all_waves "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
 eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean next_wave, re
 esttab using "$tables/tab82.tex", replace $xtregformat ///
-	refcat(1.child_birth "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" next_wave "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
+	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" next_wave "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
 eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean n_waves, re
 esttab using "$tables/tab83.tex", replace $xtregformat ///
-	refcat(1.child_birth "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" n_waves "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
+	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" n_waves "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
@@ -150,16 +150,16 @@ xtreg log_income edyears age i.male i.child_birth ib0.mstatus ib4.ethnicity age_
 eststo cre
 
 esttab pols re using "$tables/comp3.tex", replace $cregformat ///
-	refcat(edyears "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
+	refcat(edyears "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
 	mtitle("POLS" "RE")
 	
 esttab pols re fe using "$tables/comp4.tex", replace $cregformat ///
-	refcat(edyears "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
+	refcat(edyears "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
 	mtitle("POLS" "RE" "FE")
 	
 esttab pols re fe cre using "$tables/comp5.tex", replace $cregformat ///
-	refcat(edyears "\textbf{Treatment variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
+	refcat(edyears "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth) ///
 	mtitle("POLS" "RE" "FE" "CRE")

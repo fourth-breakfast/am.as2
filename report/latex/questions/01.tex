@@ -1,38 +1,43 @@
 % question one
-\questionsp{1}{0.7 points}
+\question{1}{0.7 points}
 
 \note{A central question in labor economics is: \textbf{How much more do individuals earn with higher levels of education?} Economists often estimate the \emph{returns to education}---that is, the increase in earnings associated with completing high school, college, or additional years of schooling.}
 
 \note{Using the panel data provided, begin by constructing a \textbf{bar chart} showing \textbf{mean income by education group}. Group individuals based on their \textbf{highest level of educational attainment} (e.g., less than high school, high school graduate, some college, college degree or more), and plot the \textbf{average income} for each category.}
 
+We can begin by grouping the individuals according to their years of education, as follows:
+
 \begin{minted}{stata}
 gen edyears_cat = .
 replace edyears_cat = 1 if edyears <= 11 & !missing(edyears)
 replace edyears_cat = 2 if edyears == 12 & !missing(edyears)
-replace edyears_cat = 3 if edyears >= 13 & ///
-	edyears <= 15 & !missing(edyears)
+replace edyears_cat = 3 if edyears >= 13 & edyears <= 15 ///
+	& !missing(edyears)
 replace edyears_cat = 4 if edyears >= 16 & !missing(edyears)
 \end{minted}
 
+\newpage
+
+The command \icode{graph} (with the \icode{bar} option) can then be used to create a bar chart:
+
 \begin{minted}{stata}
 graph bar (mean) income, over(edyears_cat)
-graph bar (mean) income, over(edyears_cat) by(male)
 \end{minted}
 
 \fig{fig11.png}{Mean income by education level}
 
 \note{Recent debates around student debt and the value of higher education often assume that education “pays off” equally for everyone. \textbf{Does your analysis support that assumption?} To explore this, create \textbf{separate plots by gender} to highlight any differences in the relationship between education and earnings. Discuss your findings.}
 
-\note{\textbf{Note:} For this question, create and use a categorical education variable based on each individual's highest level of education completed across the panel. Construct four categories:
-\begin{itemize}
-    \vspace{-1em}
-	\item Less than high school (11 or fewer years)
-	\vspace{-1em}
-	\item High school graduate (exactly 12 years)
-	\vspace{-1em}
-    \item Some college (13 to 15 years)
-	\vspace{-1em}
-    \item College degree or more (16 or more years)
-\end{itemize}}
+Separate plots by gender can be created using the \icode{by(male)} option:
+
+\begin{minted}{stata}
+graph bar (mean) income, over(edyears_cat) by(male)
+\end{minted}
+
+As seen in the resulting graphs (\textbf{Figure \ref{fig:fig12.png}}, below), there is a stark contrast in average mean income across genders at every educational level. 
+
+Men consistently earn higher average incomes than women across every category. Male individuals with a college degree stand to earn around \$20,000 more on average than women with comparable education, while men belonging to the first three categories earn, on average, roughly three times as much as their female counterparts. 
+
+Even though the difference in amount of dollars earned appears to widen as educational level increases, the largest relative gap occurs at the first three levels; this suggests a significant gender gap in average income across the board. These findings would challenge the assumption that education pays off for everyone. While both genders benefit from higher education, men benefit substantially more at every level.
 
 \fig{fig12.png}{Mean income by education level, by gender}

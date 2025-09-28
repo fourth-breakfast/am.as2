@@ -7,9 +7,6 @@
 
 \begin{minted}{stata}
 xtset pid wave
-\end{minted}
-
-\begin{minted}{stata}
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
     i.child_birth, re
 estimates store random
@@ -17,6 +14,12 @@ estimates store random
 
 \tab{tab31.tex}{Random effects (RE) model}
 
+According to the RE model, for each additional year of schooling individuals receive a 16.28\% higher average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
+
 \tab{comp3.tex}{POLS, RE comparison}
 
+The RE estimate of 16.28\% is 0.59\% higher than the pooled OLS estimate of 15.69\%, while yielding marginally higher standard error at 0.0031, compared to 0.0027 for the POLS model.
+
 \subquestion{b}{Under which conditions and why can the random effects estimator be \textbf{more efficient} than pooled OLS?}
+
+Random effects can be more efficient than pooled OLS when there is serial correlation in the POLS estimate, which RE models by taking into account the relation within individuals across different time periods with the use of GLS.

@@ -1,14 +1,14 @@
 \ProvidesPackage{style/commands}
 
 % commands
-\newcommand{\question}[2]{
+\newcommand{\questionnp}[2]{
     \newpage
     \section*{\underbar{Question #1 [#2]}}\vspace{-1em}
     \setcounter{table}{0}\renewcommand{\thetable}{#1.\arabic{table}}
     \setcounter{figure}{0}\renewcommand{\thefigure}{#1.\arabic{figure}}
     \setcounter{equation}{0}\renewcommand{\theequation}{#1.\arabic{equation}}
     }
-\newcommand{\questionsp}[2]{
+\newcommand{\question}[2]{
     \section*{\underbar{Question #1 [#2]}}\vspace{-1em}
     \setcounter{table}{0}\renewcommand{\thetable}{#1.\arabic{table}}
     \setcounter{figure}{0}\renewcommand{\thefigure}{#1.\arabic{figure}}

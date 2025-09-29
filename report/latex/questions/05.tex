@@ -40,6 +40,16 @@ All in all, the CRE estimate is very similar to the FE estimate, addressing the 
 
 According to the model, the \icode{mstatus_mean} CRE estimator is statistically significant at the 1\% significance level. This suggests that the exogeneity assumption does not hold.
 
+\begin{minted}{stata}
+test edyears_mean age_mean male_mean child_birth_mean ///
+    mstatus_mean ethnicity_mean
+\end{minted}
+
+\test{test5.tex}{Joint significance test}
+
+The joint significance test of the CRE time-average variables rejects the null hypothesis that all time averages equal zero with a 1\% significance level, confirming that the exogeneity assumption does not hold.
+
 To most accurately estimate \emph{returns on education}, the FE model would make most sense as it is unambiguously robust; however, if time-invariant effects had to be estimated, CRE would provide unbiased estimates while allowing for time-invariant variables.
+
 
 \tab{comp5.tex}{POLS, RE, FE, CRE comparison}

@@ -90,22 +90,36 @@ esttab using "$tables/tab51.tex", replace $xtregformat ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
+xtreg log_income edyears age i.male i.child_birth ib0.mstatus ib4.ethnicity edyears_mean age_mean male_mean child_birth_mean mstatus_mean ethnicity_mean, re
+test edyears_mean=age_mean=male_mean=child_birth_mean=mstatus_mean=ethnicity_mean=0
+file open test5 using "$tables/test5.tex", write replace
+file write test5 "\begin{tabular}{lr}" _n
+file write test5 "\toprule" _n
+file write test5 "$\chi^2$ & " %9.2f (r(chi2)) " \\" _n
+file write test5 "Prob > $\chi^2$ & " %9.4f (r(p)) " \\" _n
+file write test5 "\bottomrule" _n
+file write test5 "\multicolumn{2}{l}{\footnotesize (0) Education mean $\times$ Age mean $\times$}\\" _n
+file write test5 "\multicolumn{2}{l}{\footnotesize \space\space\space\space\space Male mean $\times$ Childbirth mean $\times$}\\" _n
+file write test5 "\multicolumn{2}{l}{\footnotesize \space\space\space\space\space Marriage Status mean $\times$ Ethnicity mean = 0}\\" _n
+file write test5 "\end{tabular}" _n
+file close test5
+
 // question six
-eststo: xtreg log_income i.child_birth age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+eststo: xtreg log_income i.child_birth age i.male edyears ib0.mstatus ib4.ethnicity child_birth_mean age_mean male_mean edyears_mean mstatus_mean ethnicity_mean, re
 esttab using "$tables/tab61.tex", replace $xtregformat ///
 	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth male_mean ethnicity_mean) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
-eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity child_birth_mean age_mean male_mean edyears_mean mstatus_mean ethnicity_mean, re
 esttab using "$tables/tab62.tex", replace $xtregformat ///
 	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male male_mean ethnicity_mean) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
-xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity child_birth_mean age_mean male_mean edyears_mean mstatus_mean ethnicity_mean, re
 test 1.child_birth#1.male
 file open tab63 using "$tables/tab63.tex", write replace
 file write tab63 "\begin{tabular}{lr}" _n
@@ -113,26 +127,26 @@ file write tab63 "\toprule" _n
 file write tab63 "$\chi^2$ & " %9.2f (r(chi2)) " \\" _n
 file write tab63 "Prob > $\chi^2$ & " %9.4f (r(p)) " \\" _n
 file write tab63 "\bottomrule" _n
-file write tab63 "\multicolumn{2}{l}{\footnotesize ( 1) Childbirth $\times$ Male = 0}\\" _n
+file write tab63 "\multicolumn{2}{l}{\footnotesize (1) Childbirth $\times$ Male = 0}\\" _n
 file write tab63 "\end{tabular}" _n
 file close tab63
 
 // question eight
-eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean all_waves, re
+eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity child_birth_mean age_mean male_mean edyears_mean mstatus_mean ethnicity_mean all_waves, re
 esttab using "$tables/tab81.tex", replace $xtregformat ///
 	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" all_waves "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male male_mean ethnicity_mean) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
-eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean next_wave, re
+eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity child_birth_mean age_mean male_mean edyears_mean mstatus_mean ethnicity_mean next_wave, re
 esttab using "$tables/tab82.tex", replace $xtregformat ///
 	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" next_wave "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male male_mean ethnicity_mean) ///
 	addnotes("Dependent variable: log(income)")
 eststo clear
 
-eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean n_waves, re
+eststo: xtreg log_income i.child_birth i.child_birth#i.male age i.male edyears ib0.mstatus ib4.ethnicity child_birth_mean age_mean male_mean edyears_mean mstatus_mean ethnicity_mean n_waves, re
 esttab using "$tables/tab83.tex", replace $xtregformat ///
 	refcat(1.child_birth "\textbf{Explanatory variable}" age "\\ \textbf{Control variables}" age_mean "\\ \textbf{CRE variables}" n_waves "\\ \textbf{Bias indicator}" _cons "", nolabel) ///
 	drop(0.male 0.mstatus 4.ethnicity 0.child_birth 0.child_birth#* *#0.male male_mean ethnicity_mean) ///

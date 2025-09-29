@@ -13,10 +13,70 @@ Fixed Effects requires only that the idiosyncratic error be uncorrelated to the 
 
 With panel data, POLS is rarely appropriate as it produces inefficient estimates and incorrect standard errors due to serial correlation. It could theoretically be used in cases in which there is only one observation per person and exogeneity holds. RE can be used when individual effects exist but are uncorrelated with the explanatory variables, while FE is necessary to produce unbiased estimators when individual characteristics are correlated with the explanatory variables. A Hausman test can verify whether the RE assumption holds, in which case RE is preferred over FE. The main limitations of the FE model are its lower efficiency and its inability to estimate time-invariant variables.
 
+\newpage
+
 \subquestion{b}{Within the practical context of this assignment (effect of education on earnings), provide an example situation for each estimator in the form of a \textbf{Directed Acyclic Graph (DAG)}. For each case (Pooled OLS, FE, and RE), explain why the assumptions required for the respective method hold in that example, and why that method would be preferred.}
 
 An example situation where the POLS estimator would be preferred could be a short-term study tracking education levels and income, where graduate programs are repeatedly randomly assigned through a scholarship lottery. It would control for age, gender, marital status and ethnicity. The exogeneity assumption would hold since the lottery mechanism ensures that education is uncorrelated with individual effects, and serial correlation would be minimized through the small time frame, mitigating the emergence of individual trends (in practice, RE would most likely be preferred since it would account for any residual within-person correlation).
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node [outcome] (income) {Income};
+    \node [observed, below left=of income] (edu) {Education (lottery)};
+    \node [observed, above left=of income] (controls) {Age, Gender,\\Marital Status, Ethnicity};
+    \node [unobserved, right=of income] (epsilon) {$u_{it}$:\\Ability,\\Motivation,\\Promotion,\\Injury};
+    
+    \draw [arrow] (edu) -- (income);
+    \draw [arrow] (controls) -- (income);
+    \draw [arrow, dashed] (epsilon) -- (income);
+\end{tikzpicture}
+\caption{DAG POLS example}
+\end{figure}
+\vspace{-2em}
+
+\newpage
+
 A situation in which the RE estimator would be preferred could be a multi-year study following workers across regions with different education policies, where said policy changes create variation in educational attainment. Said study would track education levels and income, controlling for age, gender, marital status and ethnicity. Individual effects exist and create within-person correlation over time, but these characteristics are uncorrelated with the regional policy changes affecting education access. The exogeneity assumption would hold because education variation stems from external policies rather than individual choices. RE would be preferred over POLS because it efficiently accounts for within-person correlation using GLS, and preferred over FE because it maintains efficiency when exogeneity holds while also allowing the estimation of time-invariant characteristics like gender or ethnicity.
 
-A situation in which the FE estimator would be preferred could be a standard observational panel study following individuals over several years as they make their own education decisions. This study would track education levels and income while controlling for for age, gender, marital status and ethnicity. Since unobserved individual characteristics would likely influence both educational choices and income, FE would be necessary to eliminate these effects through the use of within-transformation. While this approach has lower efficiency than RE and cannot estimate time-invariant variables like gender or ethnicity, it would be able to provide unbiased estimates of the causal effect of education on income despite endogeneity, hence making it the preferred estimator.
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node [outcome] (income) {Income};
+    \node [observed, below left=of income] (edu) {Education (policy)};
+    \node [observed, above left=of income] (controls) {Age, Gender,\\Marital Status, Ethnicity};
+    \node [unobserved, above right=of income] (alpha) {$\alpha_i$:\\Ability,\\Motivation};
+    \node [unobserved, below right=of income] (epsilon) {$\varepsilon_{it}$:\\Promotion,\\Injury};
+    
+    \draw [arrow] (edu) -- (income);
+    \draw [arrow] (controls) -- (income);
+    \draw [arrow, dashed] (alpha) -- (income);
+    \draw [arrow, dashed] (epsilon) -- (income);
+\end{tikzpicture}
+\caption{DAG RE example}
+\end{figure}
+\vspace{-2em}
+
+\newpage
+
+A situation in which the FE estimator would be preferred could be a standard observational panel study following individuals over several years as they make their own education decisions. This study would track education levels and income while controlling for age and marital status. Since unobserved individual characteristics influence both educational choices and income, FE would be necessary to eliminate endogeneity through the use of within-transformation. While this approach has lower efficiency than RE and cannot estimate time-invariant variables like gender or ethnicity, it would be able to provide unbiased estimates of the causal effect of education on income despite endogeneity, hence making it the preferred estimator.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+    \node [unobserved] (alpha) {$\alpha_i$:\\Ability,\\Motivation};
+    \node [observed, right=of alpha] (edu) {Education};
+    \node [outcome, right=of edu] (income) {Income};
+    \node [observed, above=of edu] (controls) {Age,\\Marital Status};
+    \node [unobserved, below left=of income] (epsilon) {$\varepsilon_{it}$:\\Promotion,\\Injury};
+    
+    \draw [arrow, dashed] (alpha) -- (edu);
+    \draw [arrow, dashed] (alpha) to[bend left=20] (income);
+    \draw [arrow] (edu) -- (income);
+    \draw [arrow] (controls) -- (income);
+    \draw [arrow, dashed] (epsilon) -- (income);
+\end{tikzpicture}
+\caption{FE DAG: Individual effects correlated with education}
+\label{fig:fe_dag}
+\end{figure}
+\vspace{-2em}

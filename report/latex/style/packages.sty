@@ -40,3 +40,12 @@
 % minted
 \usepackage{minted}
 \setminted{style=stata-light,bgcolor=gray!5,linenos=true}
+
+% tikz graphs
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\tikzstyle{observed} = [rectangle, draw, thick, minimum width=2cm, minimum height=0.8cm, align=center]
+\tikzstyle{unobserved} = [ellipse, draw, thick, dashed, minimum width=2cm, minimum height=0.8cm, align=center]
+\tikzstyle{outcome} = [rectangle, draw, thick, fill=gray!20, minimum width=2cm, minimum height=0.8cm, align=center]
+\tikzstyle{arrow} = [thick,->,>=stealth]

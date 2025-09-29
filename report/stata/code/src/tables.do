@@ -91,7 +91,7 @@ esttab using "$tables/tab51.tex", replace $xtregformat ///
 eststo clear
 
 xtreg log_income edyears age i.male i.child_birth ib0.mstatus ib4.ethnicity edyears_mean age_mean male_mean child_birth_mean mstatus_mean ethnicity_mean, re
-test edyears_mean=age_mean=male_mean=child_birth_mean=mstatus_mean=ethnicity_mean=0
+test age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean
 file open test5 using "$tables/test5.tex", write replace
 file write test5 "\begin{tabular}{lr}" _n
 file write test5 "\toprule" _n

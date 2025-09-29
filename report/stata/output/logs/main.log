@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:/Users/andres/repositories/am.as2/report/stata/output/logs/main.log
   log type:  text
- opened on:  29 Sep 2025, 13:37:28
+ opened on:  29 Sep 2025, 16:36:52
 
 . 
 . // load data
@@ -400,6 +400,21 @@ Mixed Race (Non-Hispanic)  |  -.3088517   .0812656    -3.80   0.000    -.4681294
 --------------------------------------------------------------------------------------------
 
 . 
+. test age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean
+
+ ( 1)  age_mean = 0
+ ( 2)  mstatus_mean = 0
+ ( 3)  child_birth_mean = 0
+ ( 4)  edyears_mean = 0
+ ( 5)  o.male_mean = 0
+ ( 6)  o.ethnicity_mean = 0
+       Constraint 5 dropped
+       Constraint 6 dropped
+
+           chi2(  4) =   71.51
+         Prob > chi2 =    0.0000
+
+. 
 . // question six
 . reg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears
 
@@ -553,44 +568,49 @@ Prob > chi2 = 0.0000
 
 . 
 . xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears ///
-> age_mean mstatus_mean edyears_mean, re
+> age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+note: male_mean omitted because of collinearity.
+note: ethnicity_mean omitted because of collinearity.
 
 Random-effects GLS regression                   Number of obs     =     55,874
 Group variable: pid                             Number of groups  =      7,126
 
 R-squared:                                      Obs per group:
      Within  = 0.3383                                         min =          1
-     Between = 0.5571                                         avg =        7.8
-     Overall = 0.4095                                         max =         17
+     Between = 0.5569                                         avg =        7.8
+     Overall = 0.4096                                         max =         17
 
-                                                Wald chi2(13)     =   34743.46
+                                                Wald chi2(14)     =   34746.58
 corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
 
 --------------------------------------------------------------------------------------------
                 log_income | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
 ---------------------------+----------------------------------------------------------------
                child_birth |
-  Childbirth in past year  |  -.0664327   .0173873    -3.82   0.000    -.1005112   -.0323541
-                       age |   .1256013   .0017014    73.82   0.000     .1222667    .1289359
+  Childbirth in past year  |  -.0576843   .0183171    -3.15   0.002    -.0935851   -.0217834
+                       age |   .1255271    .001702    73.75   0.000     .1221912     .128863
                            |
                       male |
-                     Male  |   .5521453   .0179384    30.78   0.000     .5169868    .5873038
+                     Male  |   .5505443   .0179691    30.64   0.000     .5153255    .5857631
                            |
                    mstatus |
-                  Married  |   .4509664   .0221332    20.38   0.000     .4075862    .4943467
-    Separated or divorced  |  -.0606686   .0430044    -1.41   0.158    -.1449557    .0236185
-                  Widowed  |  -.0793146   .2631663    -0.30   0.763     -.595111    .4364818
+                  Married  |   .4503732   .0221364    20.35   0.000     .4069867    .4937598
+    Separated or divorced  |  -.0626617    .043024    -1.46   0.145    -.1469871    .0216637
+                  Widowed  |   -.076685   .2631689    -0.29   0.771    -.5924865    .4391165
                            |
                  ethnicity |
-                    Black  |  -.3825358   .0195667   -19.55   0.000    -.4208858   -.3441859
-                 Hispanic  |  -.0786023   .0204588    -3.84   0.000    -.1187009   -.0385037
-Mixed Race (Non-Hispanic)  |  -.3106767   .0812577    -3.82   0.000    -.4699388   -.1514146
+                    Black  |  -.3804521   .0196145   -19.40   0.000    -.4188958   -.3420083
+                 Hispanic  |  -.0768994   .0204893    -3.75   0.000    -.1170578    -.036741
+Mixed Race (Non-Hispanic)  |  -.3088517   .0812656    -3.80   0.000    -.4681294   -.1495741
                            |
-                   edyears |   .1607636   .0039049    41.17   0.000     .1531102     .168417
-                  age_mean |   .0096833   .0037273     2.60   0.009     .0023779    .0169887
-              mstatus_mean |   .2009921   .0341281     5.89   0.000     .1341023    .2678818
-              edyears_mean |  -.0269372   .0063179    -4.26   0.000      -.03932   -.0145545
-                     _cons |   2.963378   .0613609    48.29   0.000     2.843113    3.083643
+                   edyears |   .1607359   .0039049    41.16   0.000     .1530825    .1683893
+                  age_mean |   .0109329    .003817     2.86   0.004     .0034516    .0184142
+              mstatus_mean |   .2104923   .0346966     6.07   0.000     .1424883    .2784964
+          child_birth_mean |  -.0878591   .0578693    -1.52   0.129    -.2012809    .0255627
+              edyears_mean |  -.0284737   .0063983    -4.45   0.000    -.0410142   -.0159332
+                 male_mean |          0  (omitted)
+            ethnicity_mean |          0  (omitted)
+                     _cons |   2.964409    .061364    48.31   0.000     2.844138     3.08468
 ---------------------------+----------------------------------------------------------------
                    sigma_u |   .4411512
                    sigma_e |  1.1765995
@@ -599,48 +619,53 @@ Mixed Race (Non-Hispanic)  |  -.3106767   .0812577    -3.82   0.000    -.4699388
 
 . 
 . xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears ///
-> age_mean mstatus_mean edyears_mean, re
+> age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+note: male_mean omitted because of collinearity.
+note: ethnicity_mean omitted because of collinearity.
 
 Random-effects GLS regression                   Number of obs     =     55,874
 Group variable: pid                             Number of groups  =      7,126
 
 R-squared:                                      Obs per group:
      Within  = 0.3397                                         min =          1
-     Between = 0.5570                                         avg =        7.8
+     Between = 0.5568                                         avg =        7.8
      Overall = 0.4109                                         max =         17
 
-                                                Wald chi2(14)     =   34919.04
+                                                Wald chi2(15)     =   34919.38
 corr(u_i, X) = 0 (assumed)                      Prob > chi2       =     0.0000
 
 -----------------------------------------------------------------------------------------------
                    log_income | Coefficient  Std. err.      z    P>|z|     [95% conf. interval]
 ------------------------------+----------------------------------------------------------------
                   child_birth |
-     Childbirth in past year  |  -.3458534   .0312203   -11.08   0.000     -.407044   -.2846628
+     Childbirth in past year  |   -.340031   .0321253   -10.58   0.000    -.4029955   -.2770666
                               |
                          male |
-                        Male  |   .5079851   .0183994    27.61   0.000     .4719231    .5440472
+                        Male  |   .5073913   .0184156    27.55   0.000     .4712973    .5434853
                               |
              child_birth#male |
-Childbirth in past year#Male  |   .3987095   .0370139    10.77   0.000     .3261637    .4712554
+Childbirth in past year#Male  |    .396726   .0371038    10.69   0.000     .3240039    .4694481
                               |
-                          age |   .1245118   .0017022    73.15   0.000     .1211754    .1278481
+                          age |   .1244796   .0017028    73.10   0.000     .1211423     .127817
                               |
                       mstatus |
-                     Married  |     .45062   .0221071    20.38   0.000     .4072909    .4939491
-       Separated or divorced  |  -.0627297   .0429539    -1.46   0.144    -.1469177    .0214583
-                     Widowed  |  -.0738099   .2629132    -0.28   0.779    -.5891102    .4414904
+                     Married  |   .4503206   .0221106    20.37   0.000     .4069846    .4936566
+       Separated or divorced  |  -.0637282   .0429736    -1.48   0.138    -.1479549    .0204986
+                     Widowed  |  -.0725023   .2629196    -0.28   0.783    -.5878153    .4428106
                               |
                     ethnicity |
-                       Black  |  -.3802055   .0195696   -19.43   0.000    -.4185612   -.3418498
-                    Hispanic  |   -.078614    .020461    -3.84   0.000    -.1187169    -.038511
-   Mixed Race (Non-Hispanic)  |  -.3031415   .0812698    -3.73   0.000    -.4624274   -.1438555
+                       Black  |  -.3791587   .0196169   -19.33   0.000    -.4176072   -.3407102
+                    Hispanic  |  -.0777492    .020492    -3.79   0.000    -.1179128   -.0375856
+   Mixed Race (Non-Hispanic)  |  -.3022505   .0812784    -3.72   0.000    -.4615532   -.1429478
                               |
-                      edyears |   .1619548   .0039015    41.51   0.000     .1543079    .1696017
-                     age_mean |   .0107912   .0037281     2.89   0.004     .0034843    .0180981
-                 mstatus_mean |   .2073295   .0341282     6.08   0.000     .1404395    .2742196
-                 edyears_mean |  -.0281014   .0063166    -4.45   0.000    -.0404817   -.0157211
-                        _cons |   2.990951   .0614093    48.71   0.000     2.870591    3.111311
+                      edyears |   .1619349   .0039016    41.50   0.000     .1542878     .169582
+                     age_mean |   .0114204   .0038168     2.99   0.003     .0039395    .0189012
+                 mstatus_mean |   .2121205   .0346923     6.11   0.000     .1441248    .2801162
+             child_birth_mean |  -.0445995   .0579956    -0.77   0.442    -.1582689    .0690698
+                 edyears_mean |  -.0288759   .0063964    -4.51   0.000    -.0414126   -.0163392
+                    male_mean |          0  (omitted)
+               ethnicity_mean |          0  (omitted)
+                        _cons |   2.991333   .0614115    48.71   0.000     2.870969    3.111697
 ------------------------------+----------------------------------------------------------------
                       sigma_u |  .44179274
                       sigma_e |  1.1753411
@@ -652,7 +677,7 @@ Childbirth in past year#Male  |   .3987095   .0370139    10.77   0.000     .3261
 
  ( 1)  1.child_birth#1.male = 0
 
-           chi2(  1) =  116.03
+           chi2(  1) =  114.33
          Prob > chi2 =    0.0000
 
 . 
@@ -840,5 +865,5 @@ file C:/Users/andres/repositories/am.as2/report/stata/data/clean/childbirth_clea
       name:  <unnamed>
        log:  C:/Users/andres/repositories/am.as2/report/stata/output/logs/main.log
   log type:  text
- closed on:  29 Sep 2025, 13:37:32
+ closed on:  29 Sep 2025, 16:36:56
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

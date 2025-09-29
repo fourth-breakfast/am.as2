@@ -95,6 +95,8 @@ by pid: egen child_birth_mean = mean(child_birth)
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth ///
 age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 
+test age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean
+
 // question six
 reg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears
 
@@ -107,10 +109,10 @@ estimates store fixed
 hausman fixed random
 
 xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears ///
-age_mean mstatus_mean edyears_mean, re
+age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears ///
-age_mean mstatus_mean edyears_mean, re
+age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 
 test 1.child_birth#1.male
 

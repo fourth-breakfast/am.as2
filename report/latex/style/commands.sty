@@ -1,13 +1,6 @@
 \ProvidesPackage{style/commands}
 
 % commands
-\newcommand{\questionnp}[2]{
-    \newpage
-    \section*{\underbar{Question #1 [#2]}}\vspace{-1em}
-    \setcounter{table}{0}\renewcommand{\thetable}{#1.\arabic{table}}
-    \setcounter{figure}{0}\renewcommand{\thefigure}{#1.\arabic{figure}}
-    \setcounter{equation}{0}\renewcommand{\theequation}{#1.\arabic{equation}}
-    }
 \newcommand{\question}[2]{
     \section*{\underbar{Question #1 [#2]}}\vspace{-1em}
     \setcounter{table}{0}\renewcommand{\thetable}{#1.\arabic{table}}
@@ -26,6 +19,7 @@
         \caption{#2}
         \label{fig:\detokenize{#1}}
     \end{figure}
+\vspace{-2em}
 }
 
 \newcommand{\tab}[2]{
@@ -37,6 +31,7 @@
         \label{tab:\detokenize{#1}}
     \end{center}
 \end{table}
+\vspace{-2em}
 }
 
 \newcommand{\test}[2]{
@@ -48,4 +43,5 @@
         \label{tab:\detokenize{#1}}
     \end{center}
 \end{table}
+\vspace{-2em}
 }

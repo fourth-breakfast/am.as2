@@ -5,24 +5,53 @@
 
 \subquestion{a}{Estimate the effect of childbirth on \textbf{log(income)} using the \textbf{most appropriate model}. Control for age, gender (male), marital status categories, ethnicity categories, and years of education (edyears). Interpret the estimated coefficient for childbirth in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}.}
 
+In order to choose an estimator, both endogeneity and serial correlation must be taken into account, as well as the ability to estimate time-invariant variables. Intuition points to CRE as the model of choice, but we should first formally test these assumptions.
+
+First, the pooled OLS estimate can be rejected because it fails to account for the panel structure of the data. POLS incorrectly assumes observations are independent across time, leading to inefficient estimates and incorrect standard errors when individual-specific effects create serial correlation.
+
+To decide between the RE and FE estimates, we can conduct a Hausman test to check whether or not the exogeneity assumption holds:
+
 \begin{minted}{stata}
 xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity ///
-    edyears age_mean mstatus_mean, re
+    edyears, re
+estimates store random
+
+xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity ///
+    edyears, fe
+estimates store fixed
+
+hausman fixed random
 \end{minted}
 
-\tab{tab61.tex}{Correlated Random Effects (CRE)}
+\test{haus6.tex}{Hausman test}
+
+We can reject the null hypothesis that individual-specific effects are uncorrelated with the explanatory variable, which suggests that in order to estimate the effect of childbirth on income, the FE estimate would stand as the most robust approach; however, this would omit the \emph{gender} variable due to its time-invariant nature. In this situation, the CRE estimate stands as the most appropriate model, since it can deal with endogeneity while still accounting for time-invariant effects.
+
+\begin{minted}{stata}
+by pid: egen edyears_mean = mean(edyears)
+xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity ///
+    edyears age_mean mstatus_mean edyears_mean, re
+xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
+    edyears age_mean mstatus_mean edyears_mean, re
+\end{minted}
+
+According to our model, an individual who has had a child during the past year will receive a 5.94\% lower average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
 
 \subquestion{b}{Test whether the effect of childbirth on log(income) \textbf{differs} between males and females. What conclusions can you draw from your results?}
 
 \begin{minted}{stata}
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
     edyears age_mean mstatus_mean, re
-\end{minted}
 
-\tab{tab62.tex}{Correlated Random Effects (CRE) with interaction effects}
-
-\begin{minted}{stata}
 test 1.child_birth#1.male
 \end{minted}
 
-\test{tab63.tex}{Single coeff. test}
+\test{tab63.tex}{Significance test}
+
+We can therefore reject the null hypothesis that the interaction effect of childbirth and male equals zero, meaning there is indeed difference in the effect of childbirth across genders.
+
+\tab{tab61.tex}{Correlated Random Effects (CRE)}
+
+\tab{tab62.tex}{Correlated Random Effects (CRE) with interaction effects}
+
+Looking at the regression table for the CRE model with interaction effects, we can see that a female individual who has had a child during the past year will receive a 40.49\% lower average income, ceteris paribus; however, a male individual who has had a child during the past year will receive a 5.83\% higher income, ceteris paribus. Both estimates are statistically significant at the 1\% significance level. The astounding 46.32 percentage point gap in the effect of childbirth on average income reveals significant gender disparities, with women experiencing a severe child penalty, while men seem to receive a small child bonus.

@@ -3,24 +3,34 @@
 
 \note{Finally, revisit your data and evaluate whether \textbf{attrition} is present in your sample. Based on your preferred model, discuss the likelihood of \textbf{attrition bias}. What conclusions can you draw regarding its presence, and how might it affect the validity of your results?}
 
+\vspace{-1em}
+
 \begin{minted}{stata}
+xtset pid wave
+xtdescribe
 bysort pid (wave): gen n_waves = _N
 gen all_waves = n_waves == 17
-
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
     edyears age_mean mstatus_mean all_waves, re
 \end{minted}
 
+\vspace{-1em}
+
 \tab{tab81.tex}{Attrition bias: \emph{all waves} indicator}
+
+\vspace{-1em}
 
 The \emph{all waves} indicator has a positive coefficient of 0.0591, statistically significant at the 5\% significance level. This indicates that individuals who stayed for all waves had a 6.09\% higher income than those who dropped out at some point, ceteris paribus.
 
+\vspace{-1em}
+
 \begin{minted}{stata}
 bysort pid (wave): gen next_wave = (wave[_n+1] == wave + 1)
-
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
     edyears age_mean mstatus_mean next_wave, re
 \end{minted}
+
+\vspace{-1em}
 
 \tab{tab82.tex}{Attrition bias: \emph{next wave} indicator}
 
@@ -31,12 +41,8 @@ xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity ///
     edyears age_mean mstatus_mean n_waves, re
 \end{minted}
 
-The \emph{number of waves} indicator has a positive coefficient of 0.0070, statistically significant at the 5\% significance level. This indicates that for each additional wave an individual has been part of, he or she will have 0.7\% higher income than the baseline, ceteris paribus.
+The \emph{number of waves} indicator has a positive coefficient of 0.0070, statistically significant at the 5\% significance level. This indicates that for each additional wave an individual has been part of, they will have 0.7\% higher income than the baseline, ceteris paribus.
 
-All three attrition indicators are statistically significant, providing strong evidence that attrition bias is present in the sample. The consistent pattern across all measures shows that higher-income individuals are more likely to remain in the panel, meaning the sample becomes progressively less representative of lower-income populations over time. 
-
-If lower-income individuals experience larger income penalties from childbirth and are also more likely to drop out, our estimates may underestimate the true magnitude of the child penalty, and hence of gender differences.
-
-The existence of non-random attrition threatens the validity of our estimates, since the CRE cannot account for time-varying causes of attrition that correlate with both childbirth and income; therefore, the results must be interpreted cautiously, as they are more likely to represent the effects of higher-income panel participants rather than the broader population of interest.
+All three attrition indicators are statistically significant, providing strong evidence that attrition is present in the sample. The sign and magnitude across the indicators show that lower-income individuals are more likely to drop out of the panel, meaning the sample becomes progressively less representative of lower-income populations over time. If women who experience larger child penalties are more likely to drop out, we may be underestimating the true child penalty; in other words, attrition would introduce downward bias in our model.
 
 \tab{tab83.tex}{Attrition bias: \emph{number of waves} indicator}

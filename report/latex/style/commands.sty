@@ -34,6 +34,18 @@
 \vspace{-2em}
 }
 
+\newcommand{\tabs}[2]{
+\begin{table}[s]
+    \begin{center}
+        \footnotesize
+        \caption{#2}
+        \input{\tables#1}
+        \label{tab:\detokenize{#1}}
+    \end{center}
+\end{table}
+\vspace{-2em}
+}
+
 \newcommand{\test}[2]{
 \begin{table}[H]
     \begin{center}
@@ -45,3 +57,4 @@
 \end{table}
 \vspace{-2em}
 }
+

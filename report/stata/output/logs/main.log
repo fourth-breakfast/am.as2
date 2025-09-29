@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:/Users/andres/repositories/am.as2/report/stata/output/logs/main.log
   log type:  text
- opened on:  29 Sep 2025, 16:36:52
+ opened on:  29 Sep 2025, 20:51:18
 
 . 
 . // load data
@@ -58,27 +58,6 @@ file C:/Users/andres/repositories/am.as2/report/stata/data/clean/childbirth_clea
 
 . 
 . // question two
-. sum income, detail
-
-                           Income
--------------------------------------------------------------
-      Percentiles      Smallest
- 1%         84.5            .65
- 5%          455              1
-10%     547.1706            1.3       Obs              55,874
-25%     705.6735            1.3       Sum of wgt.      55,874
-
-50%     989.5908                      Mean           10984.55
-                        Largest       Std. dev.      20284.89
-75%        14000         235884
-90%        34000         235884       Variance       4.11e+08
-95%     48892.07         235884       Skewness       3.986936
-99%        90000         235884       Kurtosis       28.89835
-
-. count if income <= 0
-  0
-
-. 
 . gen log_income = log(income)
 
 . reg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, r
@@ -216,7 +195,6 @@ Panel variable: pid (unbalanced)
  Time variable: wave, 2 to 18, but with gaps
          Delta: 1 unit
 
-. 
 . xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, re
 
 Random-effects GLS regression                   Number of obs     =     55,874
@@ -310,7 +288,6 @@ F test that all u_i=0: F(7125, 48742) = 3.89                 Prob > F = 0.0000
 
 . estimates store fixed
 
-. 
 . hausman fixed random
 
                  ---- Coefficients ----
@@ -399,7 +376,6 @@ Mixed Race (Non-Hispanic)  |  -.3088517   .0812656    -3.80   0.000    -.4681294
                        rho |   .1232516   (fraction of variance due to u_i)
 --------------------------------------------------------------------------------------------
 
-. 
 . test age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean
 
  ( 1)  age_mean = 0
@@ -416,40 +392,6 @@ Mixed Race (Non-Hispanic)  |  -.3088517   .0812656    -3.80   0.000    -.4681294
 
 . 
 . // question six
-. reg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears
-
-      Source |       SS           df       MS      Number of obs   =    55,874
--------------+----------------------------------   F(10, 55863)    =   3864.88
-       Model |  69070.4646        10  6907.04646   Prob > F        =    0.0000
-    Residual |  99834.5017    55,863  1.78713105   R-squared       =    0.4089
--------------+----------------------------------   Adj R-squared   =    0.4088
-       Total |  168904.966    55,873  3.02301588   Root MSE        =    1.3368
-
---------------------------------------------------------------------------------------------
-                log_income | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
----------------------------+----------------------------------------------------------------
-               child_birth |
-  Childbirth in past year  |  -.0794501   .0184009    -4.32   0.000    -.1155159   -.0433843
-                       age |   .1262801   .0014485    87.18   0.000      .123441    .1291192
-                           |
-                      male |
-                     Male  |   .5999785   .0126318    47.50   0.000     .5752201    .6247369
-                           |
-                   mstatus |
-                  Married  |   .6188734   .0184764    33.50   0.000     .5826594    .6550873
-    Separated or divorced  |   .0766986   .0375023     2.05   0.041     .0031939    .1502032
-                  Widowed  |   .0647223   .2531113     0.26   0.798    -.4313775     .560822
-                           |
-                 ethnicity |
-                    Black  |  -.4285689   .0139208   -30.79   0.000    -.4558537   -.4012841
-                 Hispanic  |  -.0825348   .0146187    -5.65   0.000    -.1111875   -.0538821
-Mixed Race (Non-Hispanic)  |  -.3744138   .0582999    -6.42   0.000     -.488682   -.2601457
-                           |
-                   edyears |    .145754   .0026827    54.33   0.000     .1404959     .151012
-                     _cons |   3.015595   .0318909    94.56   0.000     2.953089    3.078101
---------------------------------------------------------------------------------------------
-
-. 
 . xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears, re
 
 Random-effects GLS regression                   Number of obs     =     55,874
@@ -493,7 +435,6 @@ Mixed Race (Non-Hispanic)  |     -.3244     .08128    -3.99   0.000    -.4837059
 
 . estimates store random
 
-. 
 . xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears, fe
 note: 1.male omitted because of collinearity.
 note: 1.ethnicity omitted because of collinearity.
@@ -542,7 +483,6 @@ F test that all u_i=0: F(7125, 48742) = 3.89                 Prob > F = 0.0000
 
 . estimates store fixed
 
-. 
 . hausman fixed random
 
                  ---- Coefficients ----
@@ -617,7 +557,6 @@ Mixed Race (Non-Hispanic)  |  -.3088517   .0812656    -3.80   0.000    -.4681294
                        rho |   .1232516   (fraction of variance due to u_i)
 --------------------------------------------------------------------------------------------
 
-. 
 . xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears ///
 > age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 note: male_mean omitted because of collinearity.
@@ -672,7 +611,6 @@ Childbirth in past year#Male  |    .396726   .0371038    10.69   0.000     .3240
                           rho |  .12379798   (fraction of variance due to u_i)
 -----------------------------------------------------------------------------------------------
 
-. 
 . test 1.child_birth#1.male
 
  ( 1)  1.child_birth#1.male = 0
@@ -682,11 +620,43 @@ Childbirth in past year#Male  |    .396726   .0371038    10.69   0.000     .3240
 
 . 
 . // question eight
+. xtset pid wave
+
+Panel variable: pid (unbalanced)
+ Time variable: wave, 2 to 18, but with gaps
+         Delta: 1 unit
+
+. xtdescribe
+
+     pid:  2, 4, ..., 9022                                   n =       7126
+    wave:  2, 3, ..., 18                                     T =         17
+           Delta(wave) = 1 unit
+           Span(wave)  = 17 periods
+           (pid*wave uniquely identifies each observation)
+
+Distribution of T_i:   min      5%     25%       50%       75%     95%     max
+                         1       1       3         7        13      17      17
+
+     Freq.  Percent    Cum. |  Pattern
+ ---------------------------+-------------------
+      758     10.64   10.64 |  1................
+      601      8.43   19.07 |  11111111111111111
+      534      7.49   26.56 |  11...............
+      449      6.30   32.87 |  111..............
+      347      4.87   37.74 |  11111............
+      343      4.81   42.55 |  1111.............
+      260      3.65   46.20 |  111111...........
+      214      3.00   49.20 |  1111111..........
+      198      2.78   51.98 |  11111111.........
+     3422     48.02  100.00 | (other patterns)
+ ---------------------------+-------------------
+     7126    100.00         |  XXXXXXXXXXXXXXXXX
+
+. 
 . bysort pid (wave): gen n_waves = _N
 
 . gen all_waves = n_waves == 17
 
-. 
 . xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean all_waves, re
 note: male_mean omitted because of collinearity.
 note: ethnicity_mean omitted because of collinearity.
@@ -744,7 +714,6 @@ Childbirth in past year#Male  |   .3988969   .0371148    10.75   0.000     .3261
 . 
 . bysort pid (wave): gen next_wave = (wave[_n+1] == wave + 1)
 
-. 
 . xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean next_wave, re
 note: male_mean omitted because of collinearity.
 note: ethnicity_mean omitted because of collinearity.
@@ -865,5 +834,5 @@ file C:/Users/andres/repositories/am.as2/report/stata/data/clean/childbirth_clea
       name:  <unnamed>
        log:  C:/Users/andres/repositories/am.as2/report/stata/output/logs/main.log
   log type:  text
- closed on:  29 Sep 2025, 16:36:56
+ closed on:  29 Sep 2025, 20:51:22
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -6,12 +6,12 @@
 \begin{minted}{stata}
 gen log_income = log(income)
 reg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
-    i.child_birth
+    i.child_birth, r
 \end{minted}
 
 \subquestion{a}{What is the estimated return to \underbar{an additional year of education}? Interpret the coefficient on years of education in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}.}
 
-For each additional year of schooling, individuals receive a 15.70\% higher average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
+For each additional year of schooling, individuals earn a 15.70\% higher average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
 
 \tab{tab21.tex}{Pooled OLS model}
 
@@ -26,7 +26,7 @@ test 2.edyears_cat#1.male 3.edyears_cat#1.male 4.edyears_cat#1.male
 
 \test{tab23.tex}{Joint significance test of interaction terms}
 
-The interaction terms are highly statistically significant at the 1\% significance level, and we can therefore reject the null hypothesis that the interaction effects coefficients are equal to zero. In other words, men and women see significantly different income effects from additional education levels.
+The interaction terms are highly statistically significant at the 1\% significance level, and we can therefore reject the null hypothesis that the interaction effects coefficients are equal to zero. In other words, men and women see significantly different returns to education.
 
 \tab{tab22.tex}{Pooled OLS model with interaction effects}
 
@@ -35,6 +35,6 @@ The interaction terms are highly statistically significant at the 1\% significan
 
 For a pooled OLS estimate to be unbiased, the explanatory variable must be uncorrelated with the error term. In our case, this would require that all relevant variables affecting income are either included in the model or are uncorrelated with education; otherwise, the model would suffer from endogeneity due to factors like individual ability, family background or motivation, which are not present in our model.
 
-For the model to be efficient, serial correlation must not be present. Since individuals possess unobserved characteristics that remain constant across time and which impact their income across all time periods, this is highly unlikely. As a result, the error term for each individual is correlated across time periods. This does not create bias in the estimators, but it leads to unreliable significance tests and confidence intervals.
+For the model to be efficient, serial correlation must not be present. Since individuals possess unobserved characteristics that remain constant across time and impact their income across all time periods, this is highly unlikely. As a result, the error term for each individual is correlated across time periods. This does not create bias in the estimators, but it leads to unreliable significance tests and confidence intervals.
 
 In the context of our model, these conditions are unlikely to hold. There are many personal factors that influence both education levels and income, not all of which are accounted for in our model. Additionally, it is likely that unobserved individual characteristics which remain constant across time impact income across all time periods, which means that serial correlation is present and our estimate is inefficient.

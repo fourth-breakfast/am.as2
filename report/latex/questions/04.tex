@@ -10,18 +10,18 @@ The choice between fixed effects or random effects hinges on whether or not indi
 \subquestion{b}{Use a \textbf{fixed effects estimator} to examine the impact of years of education (edyears) on \textbf{log(income)}, controlling for age, gender (male), marital status categories, ethnicity categories, and childbirth. Interpret the coefficient on years of education in terms of its \textbf{sign}, \textbf{magnitude}, and \textbf{statistical significance}. Compare your results with those from the \textbf{pooled OLS} and \textbf{random effects} models.}
 
 \begin{minted}{stata}
-xtreg log_income edyears age i.male ib0.mstatus ib4.    ethnicity ///
+xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity ///
     i.child_birth, fe
 estimates store fixed
 \end{minted}
 
 \tab{tab41.tex}{Fixed effects (FE) model}
 
-According to the FE model, for each additional year of schooling individuals receive a 17.47\% higher average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
+According to the FE model, for each additional year of schooling individuals earn a 17.47\% higher average income, ceteris paribus. This difference is statistically significant at the 1\% significance level.
 
 Compared to the POLS and RE models, FE has both a higher coefficient (0.1610 compared to 0.1458 and 0.1509, respectively) as well as higher standard error (0.0038 compared to 0.0027 and 0.0031, respectively). This implies that individual-specific effects were negatively correlated with education, meaning the POLS and RE estimates had a downward bias.
 
-The higher standard error can also be expected, since FE trades some amount of efficiency in exchange for an unbiased estimate.
+The higher standard error can also be expected, since FE trades some efficiency in exchange for an unbiased estimate.
 
 \tab{comp4.tex}{POLS, RE, FE comparison}
 
@@ -35,4 +35,4 @@ hausman fixed random
 
 \test{tab42.tex}{Hausman test}
 
-The Hausman test checks the null hypothesis that the individual-specific effects are uncorrelated with the explanatory variable. These results indicate that we can reject the null hypothesis at the 1\% significance level, meaning that the test indicates that individual-specific effects are correlated with education years.
+The Hausman test checks the null hypothesis that the individual-specific effects are uncorrelated with the explanatory variable. These results indicate that we can reject the null hypothesis at the 1\% significance level, indicating that individual-specific effects are correlated with education years.

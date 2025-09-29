@@ -61,9 +61,6 @@ graph bar (mean) income, over(edyears_cat)
 graph bar (mean) income, over(edyears_cat) by(male)
 
 // question two
-sum income, detail
-count if income <= 0
-
 gen log_income = log(income)
 reg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, r
 
@@ -74,14 +71,12 @@ reg log_income i.edyears_cat##i.male age i.mstatus i.ethnicity child_birth, r
 
 // question three
 xtset pid wave
-
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, re
 estimates store random
 
 // question four
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, fe
 estimates store fixed
-
 hausman fixed random
 
 // question five
@@ -94,36 +89,30 @@ by pid: egen child_birth_mean = mean(child_birth)
 
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth ///
 age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
-
 test age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean
 
 // question six
-reg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears
-
 xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears, re
 estimates store random
-
 xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears, fe
 estimates store fixed
-
 hausman fixed random
 
 xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears ///
 age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
-
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears ///
 age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
-
 test 1.child_birth#1.male
 
 // question eight
+xtset pid wave
+xtdescribe
+
 bysort pid (wave): gen n_waves = _N
 gen all_waves = n_waves == 17
-
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean all_waves, re
 
 bysort pid (wave): gen next_wave = (wave[_n+1] == wave + 1)
-
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean next_wave, re
 
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean n_waves, re

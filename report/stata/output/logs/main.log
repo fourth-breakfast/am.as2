@@ -2,7 +2,7 @@
       name:  <unnamed>
        log:  C:/Users/andres/repositories/am.as2/report/stata/output/logs/main.log
   log type:  text
- opened on:  29 Sep 2025, 20:51:18
+ opened on:  30 Sep 2025, 13:32:18
 
 . 
 . // load data
@@ -146,48 +146,6 @@ College degree or more#Male  |   .1978666   .0338261     5.85   0.000     .13156
             Prob > F =    0.0000
 
 . 
-. reg log_income i.edyears_cat##i.male age i.mstatus i.ethnicity child_birth, r
-
-Linear regression                               Number of obs     =     55,874
-                                                F(15, 55858)      =    2380.33
-                                                Prob > F          =     0.0000
-                                                R-squared         =     0.3920
-                                                Root MSE          =     1.3559
-
-----------------------------------------------------------------------------------------------
-                             |               Robust
-                  log_income | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
------------------------------+----------------------------------------------------------------
-                 edyears_cat |
-                HS graduate  |   .1611156   .0242416     6.65   0.000     .1136019    .2086292
-               Some college  |   .3592922   .0241376    14.89   0.000     .3119823    .4066021
-     College degree or more  |   .4755869   .0270367    17.59   0.000     .4225948     .528579
-                             |
-                        male |
-                       Male  |   .3647052   .0234901    15.53   0.000     .3186645    .4107459
-                             |
-            edyears_cat#male |
-           HS graduate#Male  |   .2498171    .032511     7.68   0.000     .1860953     .313539
-          Some college#Male  |   .2201233   .0321917     6.84   0.000     .1570274    .2832192
-College degree or more#Male  |   .1978666   .0338261     5.85   0.000     .1315673    .2641659
-                             |
-                         age |   .1591478   .0014892   106.87   0.000     .1562289    .1620666
-                             |
-                     mstatus |
-                    Married  |   .5959157   .0212778    28.01   0.000     .5542111    .6376203
-      Separated or divorced  |  -.0538891    .048065    -1.12   0.262    -.1480967    .0403185
-                    Widowed  |  -.1766605   .2635732    -0.67   0.503    -.6932656    .3399446
-                             |
-                   ethnicity |
-                   Hispanic  |   .3499925   .0167302    20.92   0.000     .3172013    .3827837
-  Mixed Race (Non-Hispanic)  |   .1074367   .0630155     1.70   0.088     -.016074    .2309474
-   Non-Black / Non-Hispanic  |   .4637154   .0141635    32.74   0.000     .4359549    .4914759
-                             |
-                 child_birth |  -.0902205   .0200405    -4.50   0.000       -.1295    -.050941
-                       _cons |   3.355109   .0316353   106.06   0.000     3.293104    3.417115
-----------------------------------------------------------------------------------------------
-
-. 
 . // question three
 . xtset pid wave
 
@@ -327,7 +285,7 @@ Prob > chi2 = 0.0000
 
 . 
 . xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth ///
-> age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+>         age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 note: male_mean omitted because of collinearity.
 note: ethnicity_mean omitted because of collinearity.
 
@@ -508,7 +466,7 @@ Prob > chi2 = 0.0000
 
 . 
 . xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears ///
-> age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+>         age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 note: male_mean omitted because of collinearity.
 note: ethnicity_mean omitted because of collinearity.
 
@@ -558,7 +516,7 @@ Mixed Race (Non-Hispanic)  |  -.3088517   .0812656    -3.80   0.000    -.4681294
 --------------------------------------------------------------------------------------------
 
 . xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears ///
-> age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+>         age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 note: male_mean omitted because of collinearity.
 note: ethnicity_mean omitted because of collinearity.
 
@@ -834,5 +792,5 @@ file C:/Users/andres/repositories/am.as2/report/stata/data/clean/childbirth_clea
       name:  <unnamed>
        log:  C:/Users/andres/repositories/am.as2/report/stata/output/logs/main.log
   log type:  text
- closed on:  29 Sep 2025, 20:51:22
+ closed on:  30 Sep 2025, 13:32:26
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

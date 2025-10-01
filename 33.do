@@ -1,4 +1,4 @@
-	/*
+/*
 	   project: assignment 2
 	   course: applied microeconometrics
 	   author: group 33
@@ -67,8 +67,6 @@ reg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, r
 reg log_income i.edyears_cat##i.male age ib0.mstatus ib4.ethnicity i.child_birth, r
 test 2.edyears_cat#1.male 3.edyears_cat#1.male 4.edyears_cat#1.male
 
-reg log_income i.edyears_cat##i.male age i.mstatus i.ethnicity child_birth, r
-
 // question three
 xtset pid wave
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth, re
@@ -88,7 +86,7 @@ by pid: egen ethnicity_mean = mean(ethnicity)
 by pid: egen child_birth_mean = mean(child_birth)
 
 xtreg log_income edyears age i.male ib0.mstatus ib4.ethnicity i.child_birth ///
-age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+	age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 test age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean
 
 // question six
@@ -99,9 +97,9 @@ estimates store fixed
 hausman fixed random
 
 xtreg log_income i.child_birth age i.male ib0.mstatus ib4.ethnicity edyears ///
-age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+	age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 xtreg log_income i.child_birth##i.male age ib0.mstatus ib4.ethnicity edyears ///
-age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
+	age_mean mstatus_mean child_birth_mean edyears_mean male_mean ethnicity_mean, re
 test 1.child_birth#1.male
 
 // question eight
